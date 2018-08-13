@@ -12,7 +12,7 @@ import { AnyFunction, StringMap } from '../types'
 // }
 
 // We use conditional types so we can have only one type for defining Action
-export type Action<T extends string, P = void> = P extends void
+export type Action<T extends string = string, P = void> = P extends void
   ? { type: T }
   : { type: T; payload: P }
 
