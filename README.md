@@ -19,7 +19,72 @@ npm install @martin_hotell/rex-tils
 
 ## Getting started
 
-@TODO
+### Create Type-safe Redux Actions
+
+```tsx
+// actions.ts
+import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
+
+export const SET_AGE = '[core] set age'
+export const SET_NAME = '[core] set name'
+export const RELOAD_URL = '[router] Reload Page'
+
+export const Actions = {
+  setAge: (age: number) => createAction(SET_AGE, age),
+  setName: (name: string) => createAction(SET_NAME, name),
+  reloadUrl: () => createAction(RELOAD_URL),
+}
+
+export type Actions = ActionsUnion<typeof Actions>
+```
+
+```tsx
+// reducer.ts
+import * as fromActions from './actions'
+
+type User = { age: number; name: string }
+type State = typeof initialState
+
+const initialState = {
+  user: null as Partial<User> | null,
+  reloadPage: false,
+}
+
+export const reducer = (
+  state = initialState,
+  action: fromActions.Actions
+): State => {
+  switch (action.type) {
+    case fromActions.SET_AGE: {
+      const { payload: newAge } = action
+      const newUser = { ...state.user, age: newAge }
+      const newState = { ...state, user: newUser }
+
+      return newState
+    }
+
+    case fromActions.SET_NAME: {
+      const { payload: newName } = action
+      const newUser = { ...state.user, name: newName }
+      const newState = { ...state, user: newUser }
+
+      return newState
+    }
+
+    case fromActions.RELOAD_URL: {
+      return {
+        ...state,
+        reloadPage: true,
+      }
+    }
+
+    default:
+      return state
+  }
+}
+```
+
+![type safe reducers via createAction](https://cdn-images-1.medium.com/max/720/1*255NuT_RPEK0bH40Lp_oRQ.gif)
 
 ## Examples
 
