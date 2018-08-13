@@ -1,4 +1,8 @@
-# Typescript lib starter
+# rex-tils 🦖 ⚛ ️🖖
+
+> Type safe utils for redux actions and various guard utils
+
+> **WHY/WHAT? 👉** https://medium.com/@martin_hotell/improved-redux-type-safety-with-typescript-2-8-2c11a8062575
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/Hotell/rex-tils.svg)](https://greenkeeper.io/)
 
