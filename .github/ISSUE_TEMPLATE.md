@@ -4,7 +4,7 @@
 
 ## Bug report
 
-- @martin_hotell/rex-tils version: _x.x.x_ (<!-- (run `npm list @martin_hotell/rex-tils` from a terminal/cmd prompt): -->)
+- `@martin_hotell/rex-tils` version: _x.x.x_ (<!-- (run `npm list @martin_hotell/rex-tils` from a terminal/cmd prompt): -->)
 - Affected browsers (and versions): _IE 10_
 
 ### Current behaviour

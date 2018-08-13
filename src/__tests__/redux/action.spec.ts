@@ -91,6 +91,7 @@ describe(`Redux type-safe action helpers`, () => {
     }
 
     type User = { age: number; name: string }
+    // tslint:disable-next-line:no-use-before-declare
     type State = typeof initialState
 
     const initialState = {
