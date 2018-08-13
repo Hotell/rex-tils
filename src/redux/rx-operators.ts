@@ -45,5 +45,5 @@ export function ofType<
 
 export function ofType(...keys: string[]) {
   return (source: Observable<Action>) =>
-    source.pipe(filter(action => keys.indexOf(action.type) !== -1))
+    source.pipe(filter((action) => keys.indexOf(action.type) !== -1))
 }
