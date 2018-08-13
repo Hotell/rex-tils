@@ -1,7 +1,6 @@
 import { Subject } from 'rxjs'
 import { ActionsUnion, createAction } from '../../redux'
 import { ofType } from '../../redux/rx-operators'
-import { Action } from '../../redux/types'
 
 describe(`Rx operators`, () => {
   // it(`should properly filter action types via ofType`, () => {
@@ -26,8 +25,8 @@ describe(`Rx operators`, () => {
       const lulz = [] as object[]
       const haha = [] as object[]
 
-      actions.pipe(ofType(SET_AGE)).subscribe(x => lulz.push(x))
-      actions.pipe(ofType(SET_NAME)).subscribe(x => haha.push(x))
+      actions.pipe(ofType(SET_AGE)).subscribe((x) => lulz.push(x))
+      actions.pipe(ofType(SET_NAME)).subscribe((x) => haha.push(x))
 
       actions.next({ type: SET_AGE, payload: 33 })
 
@@ -56,8 +55,8 @@ describe(`Rx operators`, () => {
       const lulz = [] as object[]
       const haha = [] as object[]
 
-      actions.pipe(ofType(SET_AGE, SET_NAME)).subscribe(x => lulz.push(x))
-      actions.pipe(ofType(RELOAD_URL)).subscribe(x => haha.push(x))
+      actions.pipe(ofType(SET_AGE, SET_NAME)).subscribe((x) => lulz.push(x))
+      actions.pipe(ofType(RELOAD_URL)).subscribe((x) => haha.push(x))
 
       actions.next({ type: SET_AGE, payload: 33 })
 
