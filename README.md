@@ -1,6 +1,6 @@
 # rex-tils 🦖 ⚛ ️🖖
 
-> Type safe utils for redux actions and various guard utils
+> Type safe utils for redux actions and various guard utils for React and Angular
 
 > **WHY/WHAT? 👉** https://medium.com/@martin_hotell/improved-redux-type-safety-with-typescript-2-8-2c11a8062575
 
@@ -21,83 +21,146 @@ yarn add @martin_hotell/rex-tils
 npm install @martin_hotell/rex-tils
 ```
 
+> **Note:**
+>
+> 1.  This library supports only `TS >= 2.8` ( because it uses conditional types #dealWithIt )
+> 2.  For leveraging Rx `ofType` operator within your Epics/Effects you need to install `rxjs>= 6.x`
+
 ## Getting started
 
-### Create Type-safe Redux Actions
+Let's demonstrate simple usage with old good Counter example:
+
+[![Edit counter-example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/Hotell/rex-tils/tree/master/examples/counter)
+
+1.  Create Type-safe Redux Actions
 
 ```tsx
 // actions.ts
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
 
-export const SET_AGE = '[core] set age'
-export const SET_NAME = '[core] set name'
-export const RELOAD_URL = '[router] Reload Page'
+export const INCREMENT = 'INCREMENT'
+export const DECREMENT = 'DECREMENT'
+export const INCREMENT_IF_ODD = 'INCREMENT_IF_ODD'
 
 export const Actions = {
-  setAge: (age: number) => createAction(SET_AGE, age),
-  setName: (name: string) => createAction(SET_NAME, name),
-  reloadUrl: () => createAction(RELOAD_URL),
+  increment: () => createAction(INCREMENT),
+  decrement: () => createAction(DECREMENT),
+  incrementIfOdd: () => createAction(INCREMENT_IF_ODD),
 }
 
+// we leverage TypeScript token merging, so our consumer can use `Actions` for both runtime and compile time types 💪
 export type Actions = ActionsUnion<typeof Actions>
 ```
+
+2.  Use Type-safe Redux Actions within Reducer
 
 ```tsx
 // reducer.ts
 import * as fromActions from './actions'
 
-type User = { age: number; name: string }
-type State = typeof initialState
-
-const initialState = {
-  user: null as Partial<User> | null,
-  reloadPage: false,
-}
+export const initialState = 0 as number
+export type State = typeof initialState
 
 export const reducer = (
   state = initialState,
   action: fromActions.Actions
 ): State => {
   switch (action.type) {
-    case fromActions.SET_AGE: {
-      const { payload: newAge } = action
-      const newUser = { ...state.user, age: newAge }
-      const newState = { ...state, user: newUser }
+    case fromActions.INCREMENT: {
+      // $ExpectType 'INCREMENT'
+      const { type } = action
 
-      return newState
+      return state + 1
     }
+    case fromActions.DECREMENT: {
+      // $ExpectType 'DECREMENT'
+      const { type } = action
 
-    case fromActions.SET_NAME: {
-      const { payload: newName } = action
-      const newUser = { ...state.user, name: newName }
-      const newState = { ...state, user: newUser }
-
-      return newState
+      return state - 1
     }
-
-    case fromActions.RELOAD_URL: {
-      return {
-        ...state,
-        reloadPage: true,
-      }
-    }
-
     default:
       return state
   }
 }
 ```
 
-![type safe reducers via createAction](https://cdn-images-1.medium.com/max/720/1*255NuT_RPEK0bH40Lp_oRQ.gif)
+3.  Use Type-safe Redux Actions within Epics with `ofType` Rx operator
+
+```tsx
+// epics.ts
+
+import { ofType } from '@martin_hotell/rex-tils'
+import { ActionsObservable, StateObservable } from 'redux-observable'
+import { filter, map, withLatestFrom } from 'rxjs/operators'
+
+import * as fromActions from './actions'
+import { AppState } from './store'
+
+export const incrementIfOddEpic = (
+  // provide all our Actions type that can flow through the stream
+  // everything else is gonna be handled by TypeScript so we don't have to provide any explicit type annotations. Behold... top notch DX 👌❤️🦖
+  action$: ActionsObservable<fromActions.Actions>,
+  state$: StateObservable<AppState>
+) =>
+  action$.pipe(
+    ofType(fromActions.INCREMENT_IF_ODD),
+    withLatestFrom(state$),
+    filter(
+      (
+        [action, state] // $ExpectType ['INCREMENT_IF_ODD', {counter:number}]
+      ) => state.counter % 2 === 1
+    ),
+    map(() => fromActions.Actions.increment())
+  )
+```
 
 ## Examples
 
-@TODO
 Go checkout [examples](./examples) !
 
 ## API
 
-@TODO
+rex-tils API is tiny and consist of 2 categories:
+
+1.  Runtime JavaScript helpers
+2.  Compile time TypeScript type helpers
+
+### 1. Runtime javascript helpers
+
+**`createAction<T extends string,P>(type: T,payload?: P): Action<T,P>`**
+
+- use for declaring action creators
+
+**`ofType(...keys:string[]): Observable<Action>`**
+
+- use within Epic/Effect for filtering actions
+
+### 2. Compile time TypeScript type helpers
+
+**`ActionsUnion<A extends StringMap<AnyFunction>> = ReturnType<A[keyof A]>`**
+
+- use for getting action types from action creators implementation
+
+```tsx
+type Actions = ActionsUnion<typeof Actions>
+```
+
+**`AnyFunction = (...args: any[]) => any`**
+
+- use this instead of `Function` type constructor
+
+**`StringMap<T> = { [key: string]: T }`**
+
+- simple alias to save you keystrokes when defining JS typed object maps
+
+```tsx
+type Users = StringMap<{ name: string; email: string }>
+
+const users: Users = {
+  1: { name: 'Martin', email: 'goo@gl.com' },
+  2: { name: 'John', email: 'doe@john.com' },
+}
+```
 
 ## Guides
 

@@ -14,6 +14,10 @@ export const incrementIfOddEpic = (
   action$.pipe(
     ofType(fromActions.INCREMENT_IF_ODD),
     withLatestFrom(state$),
-    filter(([action, state]) => state.counter % 2 === 1),
+    filter(
+      (
+        [action, state] // $ExpectType ['INCREMENT_IF_ODD', {counter:number}]
+      ) => state.counter % 2 === 1
+    ),
     map(() => fromActions.Actions.increment())
   )

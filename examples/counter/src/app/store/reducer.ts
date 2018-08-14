@@ -8,10 +8,18 @@ export const reducer = (
   action: fromActions.Actions
 ): State => {
   switch (action.type) {
-    case fromActions.INCREMENT:
+    case fromActions.INCREMENT: {
+      // $ExpectType 'INCREMENT'
+      const { type } = action
+
       return state + 1
-    case fromActions.DECREMENT:
+    }
+    case fromActions.DECREMENT: {
+      // $ExpectType 'DECREMENT'
+      const { type } = action
+
       return state - 1
+    }
     default:
       return state
   }
