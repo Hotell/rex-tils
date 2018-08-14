@@ -2,8 +2,9 @@
 # yarn lockfile v1
 
 
-"@martin_hotell/rex-tils@../../dist/":
-  version "0.1.0"
+"@martin_hotell/rex-tils@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@martin_hotell/rex-tils/-/rex-tils-0.2.0.tgz#698cac8e4009ee3da70c8e6c3d9e16431c2241c4"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
