@@ -1,8 +1,20 @@
+jest.mock('../../environment', () => ({ IS_DEV: true, IS_PROD: false }))
+
 import { ActionsUnion, createAction } from '../../redux'
 
 // tslint:disable:no-magic-numbers
 
 describe(`Redux type-safe action helpers`, () => {
+  describe(`Should create immutable objects`, () => {
+    const SET_AGE = '[core] set age'
+    const setAge = (age: number) => createAction(SET_AGE, age)
+    const setAgeAction = setAge(33)
+
+    // @ts-ignore
+    expect(() => (setAgeAction.type = 'Foo')).toThrow()
+    // @ts-ignore
+    expect(() => (setAgeAction.payload = 44)).toThrow()
+  })
   describe(`Should work with constants`, () => {
     const SET_AGE = '[core] set age'
     const SET_NAME = '[core] set name'
