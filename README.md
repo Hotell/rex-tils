@@ -145,6 +145,29 @@ rex-tils API is tiny and consist of 2 categories:
 type Actions = ActionsUnion<typeof Actions>
 ```
 
+**`ActionsOfType<ActionUnion, ActionType extends string>`**
+
+- helper for getting particular action type from ActionsUnion
+
+```tsx
+const SET_AGE = '[core] set age'
+const SET_NAME = '[core] set name'
+
+const Actions = {
+  setAge: (age: number) => createAction(SET_AGE, age),
+  setName: (name: string) => createAction(SET_NAME, name),
+}
+
+type Actions = ActionsUnion<typeof Actions>
+
+type AgeAction = ActionsOfType<Actions, typeof SET_AGE>
+
+const action: AgeAction = {
+  type: '[core] set age',
+  payload: 23,
+}
+```
+
 **`AnyFunction = (...args: any[]) => any`**
 
 - use this instead of `Function` type constructor
