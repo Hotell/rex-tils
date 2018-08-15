@@ -74,6 +74,9 @@
   "peerDependencies": {
     "tslib": ">=1.9.0"
   },
+  "optionalDependencies": {
+    "rxjs": "^6.2.2"
+  },
   "dependencies": {},
   "devDependencies": {
     "@types/chokidar": "1.7.5",
