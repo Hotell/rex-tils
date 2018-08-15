@@ -75,7 +75,8 @@
     "tslib": ">=1.9.0"
   },
   "optionalDependencies": {
-    "rxjs": "^6.2.2"
+    "rxjs": "^6.2.2",
+    "react": "^16.4.2"
   },
   "dependencies": {},
   "devDependencies": {
@@ -84,6 +85,7 @@
     "@types/json5": "0.0.29",
     "@types/node": "10.7.0",
     "@types/prettier": "1.13.2",
+    "@types/react": "16.4.10",
     "@types/webpack-config-utils": "2.3.0",
     "awesome-typescript-loader": "5.2.0",
     "commitizen": "2.10.1",
@@ -96,6 +98,7 @@
     "json5": "1.0.1",
     "lint-staged": "7.2.2",
     "prettier": "1.14.2",
+    "react": "16.4.2",
     "rollup": "0.64.1",
     "rollup-plugin-commonjs": "9.1.5",
     "rollup-plugin-json": "3.0.0",
