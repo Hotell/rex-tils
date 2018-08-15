@@ -1,6 +1,6 @@
 jest.mock('../../environment', () => ({ IS_DEV: true, IS_PROD: false }))
 
-import { ActionsUnion, createAction } from '../../redux'
+import { ActionsOfType, ActionsUnion, createAction } from '../../redux'
 
 // tslint:disable:no-magic-numbers
 
@@ -15,6 +15,30 @@ describe(`Redux type-safe action helpers`, () => {
     // @ts-ignore
     expect(() => (setAgeAction.payload = 44)).toThrow()
   })
+
+  describe(`Should be able to extract action type from Union`, () => {
+    const SET_AGE = '[core] set age'
+    const SET_NAME = '[core] set name'
+    const RELOAD_URL = '[router] Reload Page'
+
+    const Actions = {
+      setAge: (age: number) => createAction(SET_AGE, age),
+      setName: (name: string) => createAction(SET_NAME, name),
+      reloadUrl: () => createAction(RELOAD_URL),
+    }
+
+    type Actions = ActionsUnion<typeof Actions>
+
+    type AgeAction = ActionsOfType<Actions, typeof SET_AGE>
+
+    const action: AgeAction = {
+      type: '[core] set age',
+      payload: 23,
+    }
+
+    expect(action).toMatchObject(Actions.setAge(23))
+  })
+
   describe(`Should work with constants`, () => {
     const SET_AGE = '[core] set age'
     const SET_NAME = '[core] set name'
