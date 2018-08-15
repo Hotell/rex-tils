@@ -1,3 +1,4 @@
+import { IS_DEV } from '../environment'
 import { Action } from './types'
 
 export function createAction<T extends string>(type: T): Action<T>
@@ -6,5 +7,7 @@ export function createAction<T extends string, P>(
   payload: P
 ): Action<T, P>
 export function createAction<T extends string, P>(type: T, payload?: P) {
-  return payload === undefined ? { type } : { type, payload }
+  const action = payload === undefined ? { type } : { type, payload }
+
+  return IS_DEV ? Object.freeze(action) : action
 }
