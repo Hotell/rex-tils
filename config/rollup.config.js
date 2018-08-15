@@ -43,7 +43,11 @@ const PATHS = {
 /**
  * @type {string[]}
  */
-const external = Object.keys(pkg.peerDependencies) || []
+const external = [
+  ...Object.keys(pkg.peerDependencies || {}),
+  ...Object.keys(pkg.optionalDependencies || {}),
+  'rxjs/operators',
+]
 
 /**
  *  @type {Plugin[]}
