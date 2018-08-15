@@ -162,6 +162,70 @@ const users: Users = {
 }
 ```
 
+**`Constructor<T>`**
+
+- alias for the construct signature that describes a type which can construct objects of the generic type T and whose constructor function accepts an arbitrary number of parameters of any type
+
+**`Omit<T,K>`**
+
+```tsx
+type Result = Omit<
+  {
+    one: string
+    two: number
+    three: boolean
+  },
+  {
+    two: number
+  }
+>
+
+const obj: Result = {
+  one: '123',
+  three: false,
+}
+```
+
+#### React related types:
+
+**`GetComponentProps<T>`**
+
+- extracts Props type annotation from Component class or component Function
+
+```tsx
+type Props = { who: string }
+type State = { count: number }
+class Test extends Component<Props, State> {}
+const TestFn = (_props: Props) => null
+const TestFnViaGeneric: SFC<Props> = (_props) => null
+
+// $ExpectType {who: string}
+type PropsFromComponent = GetComponentProps<Test>
+
+// $ExpectType {who: string}
+type PropsFromFunction = GetComponentProps<typeof TestFn>
+
+// $ExpectType {who: string}
+type PropsFromFunction2 = GetComponentProps<typeof TestFnViaGeneric>
+```
+
+**`GetComponentPropsAndState<T>`**
+
+- extracts Props and State type annotation from Component class
+
+```tsx
+type Props = { who: string }
+type State = { count: number }
+class Test extends Component<Props> {}
+class TestWithState extends Component<Props, State> {}
+
+// $ExpectType {props: {who: string}, state: {}}
+type PropsFromComponent = GetComponentPropsAndState<Test>
+
+// $ExpectType {props: {who: string}, state: {count: number}}
+type PropsAndStateFromComponent = GetComponentPropsAndState<TestWithState>
+```
+
 ## Guides
 
 @TODO
