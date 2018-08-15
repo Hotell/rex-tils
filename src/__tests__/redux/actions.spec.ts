@@ -17,6 +17,18 @@ describe(`Redux type-safe action helpers`, () => {
   })
 
   describe(`Should be able to extract action type from Union`, () => {
+    enum ActionTypes {
+      SET_AGE = '[core] set age',
+      SET_NAME = '[core] set name',
+      RELOAD_URL = '[router] Reload Page',
+    }
+    const ActionsViaEnums = {
+      setAge: (age: number) => createAction(ActionTypes.SET_AGE, age),
+      setName: (name: string) => createAction(ActionTypes.SET_NAME, name),
+      reloadUrl: () => createAction(ActionTypes.RELOAD_URL),
+    }
+    type ActionsViaEnums = ActionsUnion<typeof ActionsViaEnums>
+
     const SET_AGE = '[core] set age'
     const SET_NAME = '[core] set name'
     const RELOAD_URL = '[router] Reload Page'
@@ -31,12 +43,20 @@ describe(`Redux type-safe action helpers`, () => {
 
     type AgeAction = ActionsOfType<Actions, typeof SET_AGE>
 
+    type AgeActionViaEnum = ActionsOfType<ActionsViaEnums, ActionTypes.SET_AGE>
+
+    const actionViaEnum: AgeActionViaEnum = {
+      type: ActionTypes.SET_AGE,
+      payload: 32,
+    }
+
     const action: AgeAction = {
       type: '[core] set age',
       payload: 23,
     }
 
     expect(action).toMatchObject(Actions.setAge(23))
+    expect(actionViaEnum).toMatchObject(ActionsViaEnums.setAge(32))
   })
 
   describe(`Should work with constants`, () => {
