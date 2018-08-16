@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.0"></a>
+
+# [0.5.0](https://www.github.com/Hotell/rex-tils/compare/v0.4.0...v0.5.0) (2018-08-16)
+
+### Features
+
+- **redux:** make ActionsOfType public so consumers can get action type from union ([8a0118e](https://www.github.com/Hotell/rex-tils/commit/8a0118e)), closes [#3](https://www.github.com/Hotell/rex-tils/issues/3)
+
 <a name="0.4.0"></a>
 
 # [0.4.0](https://www.github.com/Hotell/rex-tils/compare/v0.3.0...v0.4.0) (2018-08-15)
