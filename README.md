@@ -135,6 +135,30 @@ rex-tils API is tiny and consist of 2 categories:
 
 - use within Epic/Effect for filtering actions
 
+#### Type guards:
+
+- all following type guards properly narrow your types 💪:
+
+**`isBlank(value:any)`**
+
+- checks if value is null or undefined
+
+**`isPresent(value:any)`**
+
+- checks if value is not null nor undefined
+
+**`isFunction(value:any)`**
+
+**`isBoolean(value:any)`**
+
+**`isString(value:any)`**
+
+**`isNumber(value:any)`**
+
+**`isArray(value:any)`**
+
+**`isObject(value:any)`**
+
 #### React/Preact related helpers:
 
 **`pickWithRest<Props, PickedProps>( props: object, pickProps: keyof PickedProps[] )`**
@@ -279,6 +303,14 @@ const obj: Result = {
   three: false,
 }
 ```
+
+**`Nullable<T>`**
+
+- opposite of standard library `NonNullable`
+
+**`Maybe<T>`**
+
+- Maybe types accept the provided type as well as null or undefined
 
 #### React related types:
 
