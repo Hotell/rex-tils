@@ -135,6 +135,26 @@ rex-tils API is tiny and consist of 2 categories:
 
 - use within Epic/Effect for filtering actions
 
+**`pickWithRest<Props, PickedProps>( props: object, pickProps: keyof PickedProps[] )`**
+
+- use for getting generic ...rest from object ( TS cannot do that by default )
+- you need to explicitly state generic params
+- `Props` generic props intersection
+- `PickedProps` props type from which you wanna pick properties so you get them via destructuring
+
+```tsx
+type InjectedProps = { one: number; two: boolean }
+function test<OriginalProps>(props: OriginalProps) {
+  type Props = OriginalProps & InjectedProps
+  const {
+    // $ExpectType number
+    one,
+    // $ExpectType OriginalProps
+    rest,
+  } = pickWithRest<Props, InjectedProps>(props, ['one'])
+}
+```
+
 ### 2. Compile time TypeScript type helpers
 
 **`ActionsUnion<A extends StringMap<AnyFunction>> = ReturnType<A[keyof A]>`**
