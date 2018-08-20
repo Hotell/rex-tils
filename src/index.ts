@@ -1,4 +1,9 @@
 /**
+ * React/Preact utils
+ */
+export * from './react'
+
+/**
  * Redux utils
  */
 export * from './redux'
