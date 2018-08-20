@@ -135,6 +135,8 @@ rex-tils API is tiny and consist of 2 categories:
 
 - use within Epic/Effect for filtering actions
 
+#### React/Preact related helpers:
+
 **`pickWithRest<Props, PickedProps>( props: object, pickProps: keyof PickedProps[] )`**
 
 - use for getting generic ...rest from object ( TS cannot do that by default )
@@ -152,6 +154,55 @@ function test<OriginalProps>(props: OriginalProps) {
     // $ExpectType OriginalProps
     rest,
   } = pickWithRest<Props, InjectedProps>(props, ['one'])
+}
+```
+
+**`DefaultProps<T>(props: T): Readonly<T>`**
+
+- returns frozen object ( useful for default props )
+
+**`createPropsGetter<T>(props: T): T`**
+
+> **Why ?**
+>
+> https://medium.com/@martin_hotell/react-typescript-and-defaultprops-dilemma-ca7f81c661c7
+
+- use for resolving defaultProps within component implementation
+- goes side by side with `DefaultProps` helper/type alias
+- it's just identity function with proper props type resolution
+
+```tsx
+type Props = {
+  onClick: (e: MouseEvent<HTMLElement>) => void
+  children: ReactNode
+} & DefaultProps<typeof defaultProps>
+
+const defaultProps = DefaultProps({
+  color: 'blue' as 'blue' | 'green' | 'red',
+  type: 'button' as 'button' | 'submit',
+})
+const getProps = createPropsGetter(defaultProps)
+
+class Button extends Component<Props> {
+  static readonly defaultProps = defaultProps
+  render() {
+    const {
+      // $ExpectType (e: MouseEvent<HTMLElement>) => void
+      onClick: handleClick,
+      // $ExpectType 'blue' | 'green' | 'red'
+      color,
+      // $ExpectType 'button' | 'submit'
+      type,
+      // $ExpectType ReactNode
+      children,
+    } = getProps(this.props)
+
+    return (
+      <button onClick={handleClick} type={type} className={color}>
+        {children}
+      </button>
+    )
+  }
 }
 ```
 
@@ -268,6 +319,11 @@ type PropsFromComponent = GetComponentPropsAndState<Test>
 // $ExpectType {props: {who: string}, state: {count: number}}
 type PropsAndStateFromComponent = GetComponentPropsAndState<TestWithState>
 ```
+
+**`DefaultProps<T>(props: T): Partial<T>`**
+
+- type alias
+- useful for declaring Component props intersection with defaultProps
 
 ## Guides
 
