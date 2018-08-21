@@ -85,7 +85,7 @@
     "@types/json5": "0.0.29",
     "@types/node": "10.7.1",
     "@types/prettier": "1.13.2",
-    "@types/react": "16.4.11",
+    "@types/react": "16.4.10",
     "@types/react-dom": "16.0.7",
     "@types/webpack-config-utils": "2.3.0",
     "awesome-typescript-loader": "5.2.0",
