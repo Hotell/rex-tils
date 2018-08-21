@@ -97,9 +97,9 @@
   version "7.0.31"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.31.tgz#80ea4d175599b2a00149c29a10a4eb2dff592e86"
 
-"@types/node@10.7.0":
-  version "10.7.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.7.0.tgz#d384b2c8625414ab2aa18fdf989c288d6a7a8202"
+"@types/node@10.7.1":
+  version "10.7.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.7.1.tgz#b704d7c259aa40ee052eec678758a68d07132a2e"
 
 "@types/prettier@1.13.2":
   version "1.13.2"
@@ -118,9 +118,16 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.4.10":
+"@types/react@*":
   version "16.4.10"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.10.tgz#fb577091034b25a81f829923e7d38258f43e3165"
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@16.4.11":
+  version "16.4.11"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.11.tgz#330f3d864300f71150dc2d125e48644c098f8770"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -3436,9 +3443,9 @@ json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
-json5@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
+json5@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.0.1.tgz#3d6d0d1066039eb50984e66a7840e4f4b7a2c660"
   dependencies:
     minimist "^1.2.0"
 
@@ -5513,12 +5520,13 @@ trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
 
-ts-jest@23.1.3:
-  version "23.1.3"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-23.1.3.tgz#33e3187d3ef0d42adada6347acf2c3539ac56107"
+ts-jest@23.1.4:
+  version "23.1.4"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-23.1.4.tgz#66ac1d8d3fbf8f9a98432b11aa377aa850664b2b"
   dependencies:
     closest-file-data "^0.1.4"
     fs-extra "6.0.1"
+    json5 "^0.5.0"
     lodash "^4.17.10"
 
 tslib@1.9.0:
@@ -5533,9 +5541,9 @@ tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.2.tgz#8be0cc9a1f6dc7727c38deb16c2ebd1a2892988e"
 
-tslint-config-prettier@1.14.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.14.0.tgz#860b36634e53f4c70c64c51ff3ef7fd9bbab7676"
+tslint-config-prettier@1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.15.0.tgz#76b9714399004ab6831fdcf76d89b73691c812cf"
 
 tslint-config-standard@7.1.0:
   version "7.1.0"
