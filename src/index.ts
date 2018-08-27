@@ -17,3 +17,8 @@ export * from './types'
  * type guards
  */
 export * from './guards'
+
+/**
+ * various utils
+ */
+export * from './utils'

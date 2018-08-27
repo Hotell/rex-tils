@@ -159,6 +159,12 @@ rex-tils API is tiny and consist of 2 categories:
 
 **`isObject(value:any)`**
 
+#### Utils:
+
+**`noop(): void`**
+
+**`identity<T>(value:T):T`**
+
 #### React/Preact related helpers:
 
 **`pickWithRest<Props, PickedProps>( props: object, pickProps: keyof PickedProps[] )`**
