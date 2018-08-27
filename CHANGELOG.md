@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.0"></a>
+
+# [0.9.0](https://github.com/Hotell/rex-tils/compare/v0.8.0...v0.9.0) (2018-08-27)
+
+### Features
+
+- **utils:** implement basic utils ([#12](https://github.com/Hotell/rex-tils/issues/12)) ([de98a6f](https://github.com/Hotell/rex-tils/commit/de98a6f))
+
 <a name="0.8.0"></a>
 
 # [0.8.0](https://www.github.com/Hotell/rex-tils/compare/v0.7.0...v0.8.0) (2018-08-20)
