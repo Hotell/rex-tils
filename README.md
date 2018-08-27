@@ -147,6 +147,10 @@ rex-tils API is tiny and consist of 2 categories:
 
 - checks if value is not null nor undefined
 
+**`isEmpty<T>(value:T)`**
+
+- checks if value is empty for null | undefined | string | array | object
+
 **`isFunction(value:any)`**
 
 **`isBoolean(value:any)`**

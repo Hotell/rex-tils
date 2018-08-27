@@ -3,6 +3,7 @@ import {
   isBlank,
   isBoolean,
   isDate,
+  isEmpty,
   isFunction,
   isNumber,
   isObject,
@@ -51,6 +52,12 @@ describe(`type guards`, () => {
 
   describe(`isObject`, () => {
     it(`should return false if value is not an object map`, () => {
+      type MyMap = { who: string; age: number }
+      const possibleValidObj = {
+        who: 'John',
+        age: 32,
+      } as MyMap | string | boolean
+
       expect(isObject(123)).toBe(false)
       expect(isObject('hello')).toBe(false)
       expect(isObject(null)).toBe(false)
@@ -60,7 +67,19 @@ describe(`type guards`, () => {
       expect(isObject(emptyArr)).toBe(false)
 
       expect(isObject(emptyObj)).toBe(true)
-      expect(isObject({ one: 1 })).toBe(true)
+
+      if (isObject<MyMap>(possibleValidObj)) {
+        // $ExpectType {one:number}
+        expect(possibleValidObj).toHaveProperty('age')
+        const { age } = possibleValidObj
+        expect(age).toBe(32)
+      } else {
+        // $ExpectType string | boolean
+        expect(possibleValidObj).toThrow()
+        // @ts-ignore
+        const { one } = possibleValidObj
+        expect(one).toThrow()
+      }
     })
   })
 
@@ -197,8 +216,8 @@ describe(`type guards`, () => {
     })
 
     describe(`isPromise`, () => {
-      it(`should return true if value is Promise`, (done) => {
-        const promiseViaCtor = new Promise((resolve) => resolve())
+      it(`should return true if value is Promise`, done => {
+        const promiseViaCtor = new Promise(resolve => resolve())
         const promiseResolved = Promise.resolve()
         const promiseRejected = () =>
           Promise.reject().catch(() => {
@@ -217,6 +236,87 @@ describe(`type guards`, () => {
         expect(isPromise(noop)).toBe(false)
         expect(isPromise(observableLike)).toBe(false)
       })
+    })
+  })
+
+  describe(`isEmpty`, () => {
+    it(`should return true for empty strings`, () => {
+      const str = 'hello'
+
+      expect(isEmpty('')).toBe(true)
+      expect(isEmpty(str)).toBe(false)
+
+      if (isEmpty(str)) {
+        // $ExpectType never
+        expect(str[1].toUpperCase()).toThrow()
+      } else {
+        // $ExpectType 'hello'
+        expect(str).toHaveLength(5)
+      }
+    })
+
+    it(`should return true for empty arrays`, () => {
+      const arr = ['hello', 'world']
+
+      expect(isEmpty(emptyArr)).toBe(true)
+
+      if (isEmpty(arr)) {
+        // $ExpectType never
+        expect(arr[1]).toThrow()
+      } else {
+        // $ExpectType string[]
+        expect(arr).toHaveLength(2)
+
+        const [first, second] = arr
+        expect(first).toBe('hello')
+        expect(second).toBe('world')
+      }
+    })
+
+    it(`should return true for empty objects`, () => {
+      const obj = { one: 1, two: 2 }
+
+      expect(isEmpty(emptyObj)).toBe(true)
+      expect(isEmpty(obj)).toBe(false)
+
+      if (isEmpty(obj)) {
+        // $ExpectType never
+        // @ts-ignore
+        expect(obj.one.toString()).toThrow()
+      } else {
+        const { one, two } = obj
+        expect({ one, two }).toEqual(obj)
+        // $ExpectType { one: number; two: number }
+        expect(obj).toHaveProperty('one')
+        expect(obj).toHaveProperty('two')
+      }
+    })
+
+    it(`should throw error when non supported values are checked for emptiness`, () => {
+      // @ts-ignore
+      expect(() => isEmpty(undefined)).toThrowError(
+        'checked value must be type of string | array | object. You provided undefined'
+      )
+
+      // @ts-ignore
+      expect(() => isEmpty(null)).toThrowError(
+        'checked value must be type of string | array | object. You provided null'
+      )
+
+      // @ts-ignore
+      expect(() => isEmpty(true)).toThrowError(
+        'checked value must be type of string | array | object. You provided boolean'
+      )
+
+      // @ts-ignore
+      expect(() => isEmpty(123)).toThrowError(
+        'checked value must be type of string | array | object. You provided number'
+      )
+
+      // on `object` types we cannot constraint with proper type error, we would get runtime error though
+      expect(() => isEmpty(noop)).toThrow(
+        'checked value must be type of string | array | object. You provided function'
+      )
     })
   })
 })
