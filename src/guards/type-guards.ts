@@ -13,3 +13,11 @@ export const isArray = <T>(value: any): value is Array<T> =>
   Array.isArray(value)
 export const isObject = <T extends object>(value: any): value is T =>
   value != null && !Array.isArray(value) && typeof value === 'object'
+
+export const isDate = (value: any): value is Date =>
+  value instanceof Date && !isNaN(+value)
+
+export const isPromise = (value: any): value is PromiseLike<any> =>
+  value &&
+  typeof value.subscribe !== 'function' &&
+  typeof value.then === 'function'

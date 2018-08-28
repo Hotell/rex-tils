@@ -159,6 +159,10 @@ rex-tils API is tiny and consist of 2 categories:
 
 **`isObject(value:any)`**
 
+**`isDate(value:any): value is Date`**
+
+**`isPromise(value:any): value is PromiseLike<any>`**
+
 #### Utils:
 
 **`noop(): void`**
