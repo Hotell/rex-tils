@@ -2,10 +2,12 @@ import {
   isArray,
   isBlank,
   isBoolean,
+  isDate,
   isFunction,
   isNumber,
   isObject,
   isPresent,
+  isPromise,
   isString,
 } from '../../guards'
 
@@ -169,6 +171,39 @@ describe(`type guards`, () => {
           expect(typeof value).toBe('string')
           expect(() => value.toString()).toThrow()
         }
+      })
+    })
+
+    describe(`isDate`, () => {
+      it(`should return true if value is Date`, () => {
+        expect(isDate('2018-09-02')).toBe(false)
+        expect(isDate(Date.now())).toBe(false)
+        expect(isDate(Date.parse('2018-09-02'))).toBe(false)
+
+        expect(isDate(new Date())).toBe(true)
+      })
+    })
+
+    describe(`isPromise`, () => {
+      it(`should return true if value is Promise`, (done) => {
+        const promiseViaCtor = new Promise((resolve) => resolve())
+        const promiseResolved = Promise.resolve()
+        const promiseRejected = () =>
+          Promise.reject().catch(() => {
+            done()
+          })
+        const observableLike = {
+          subscribe: noop,
+        }
+
+        expect(isPromise(promiseViaCtor)).toBe(true)
+        expect(isPromise(promiseResolved)).toBe(true)
+        expect(isPromise(promiseRejected())).toBe(true)
+
+        expect(isPromise(emptyObj)).toBe(false)
+        expect(isPromise(emptyArr)).toBe(false)
+        expect(isPromise(noop)).toBe(false)
+        expect(isPromise(observableLike)).toBe(false)
       })
     })
   })
