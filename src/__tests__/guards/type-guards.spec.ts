@@ -93,6 +93,18 @@ describe(`type guards`, () => {
       expect(isNumber(Infinity)).toBe(true)
       expect(isNumber(-1)).toBe(true)
       expect(isNumber('123')).toBe(false)
+
+      // tslint:disable-next-line:prefer-const
+      let narrowValue = 123 as number | { foo: () => {} }
+
+      if (isNumber(narrowValue)) {
+        // $ExpectType number
+        expect(typeof narrowValue.toFixed).toBe('function')
+      } else {
+        // $ExpectType { foo: ()=>{} }
+        // @ts-ignore
+        expect(() => narrowValue.foo()).toThrow()
+      }
     })
   })
 
