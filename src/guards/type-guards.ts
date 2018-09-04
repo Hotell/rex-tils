@@ -8,7 +8,8 @@ export const isBoolean = (value: any): value is boolean =>
   typeof value === 'boolean'
 export const isString = (value: any): value is string =>
   typeof value === 'string'
-export const isNumber = (value: any) => typeof value === 'number'
+export const isNumber = (value: any): value is number =>
+  typeof value === 'number'
 export const isArray = <T>(value: any): value is Array<T> =>
   Array.isArray(value)
 export const isObject = <T extends object>(value: any): value is T =>
