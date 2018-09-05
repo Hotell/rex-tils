@@ -147,9 +147,9 @@ rex-tils API is tiny and consist of 2 categories:
 
 - checks if value is not null nor undefined
 
-**`isEmpty<T>(value:T)`**
+**`isEmpty<T extends string | object | any[]>(value:T): T`**
 
-- checks if value is empty for null | undefined | string | array | object
+- checks if value is empty for string | array | object otherwise it throws an error
 
 **`isFunction(value:any)`**
 
@@ -161,7 +161,22 @@ rex-tils API is tiny and consist of 2 categories:
 
 **`isArray(value:any)`**
 
-**`isObject(value:any)`**
+**`isObject<T extends object>(value:any): T`**
+
+- to get proper type object within if branch, you need to explicitly provide generic value otherwise it will be narrowed to `object` only
+
+```ts
+type MyMap = { who: string; age: number }
+declare const someObj: object | string | number
+
+if (isObject<MyMap>(someObj)) {
+  // $ExpectType MyMap
+  someObj
+} else {
+  // $ExpectType string | number
+  someObj
+}
+```
 
 **`isDate(value:any): value is Date`**
 
