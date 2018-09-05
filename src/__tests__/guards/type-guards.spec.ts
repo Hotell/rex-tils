@@ -216,8 +216,8 @@ describe(`type guards`, () => {
     })
 
     describe(`isPromise`, () => {
-      it(`should return true if value is Promise`, done => {
-        const promiseViaCtor = new Promise(resolve => resolve())
+      it(`should return true if value is Promise`, (done) => {
+        const promiseViaCtor = new Promise((resolve) => resolve())
         const promiseResolved = Promise.resolve()
         const promiseRejected = () =>
           Promise.reject().catch(() => {
