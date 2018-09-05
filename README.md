@@ -294,7 +294,7 @@ const action: AgeAction = {
 
 **`AnyFunction = (...args: any[]) => any`**
 
-- use this instead of `Function` type constructor
+- use this type definition instead of `Function` type constructor
 
 **`StringMap<T> = { [key: string]: T }`**
 
@@ -340,6 +340,26 @@ const obj: Result = {
 **`Maybe<T>`**
 
 - Maybe types accept the provided type as well as null or undefined
+
+**`UnionFromTuple<T>`**
+
+- extracts union type from tuple
+
+**`Keys<T>`**
+
+- `keyof` doesn't work/distribute on union types. This mapped type fixes this issue
+
+**`KnownKeys<T>`**
+
+- gets proper known keys from object which contains index type `[key:string]: any`
+
+**`RequiredKnownKeys<T>`**
+
+- gets required only known keys from object which contains index type `[key:string]: any`
+
+**`OptionalKnownKeys<T>`**
+
+- gets optional only known keys from object which contains index type `[key:string]: any`
 
 #### React related types:
 
@@ -391,6 +411,8 @@ type PropsAndStateFromComponent = GetComponentPropsAndState<TestWithState>
 @TODO
 
 ---
+
+## Publishing
 
 Execute `yarn release` which will handle following tasks:
 
