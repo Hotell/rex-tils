@@ -1,8 +1,9 @@
-import { AnyFunction, Nullable } from '../types'
+import { Nullable } from '../types'
 
 export const isBlank = <T>(value: T): value is Nullable<T> => value == null
 export const isPresent = <T>(value: T): value is NonNullable<T> => value != null
-export const isFunction = <T extends AnyFunction>(value: any): value is T =>
+// tslint:disable-next-line:ban-types
+export const isFunction = (value: any): value is Function =>
   typeof value === 'function'
 export const isBoolean = (value: any): value is boolean =>
   typeof value === 'boolean'

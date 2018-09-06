@@ -38,14 +38,17 @@ describe(`type guards`, () => {
         // $ExpectType number[]
         expect(arrWithTypes[0].toString()).toBe('1')
       } else {
-        arrWithTypes.toString()
+        // $ExpectType string
+        expect(typeof arrWithTypes).toBe('string')
       }
 
       if (isArray(arrWithComplexTypes)) {
         // $ExpectType Array<{ who: string }>
         expect(arrWithComplexTypes[0].who).toBe('Me')
       } else {
-        arrWithTypes.toString()
+        // $ExpectType string
+        // @ts-ignore
+        expect(arrWithComplexTypes[0].who).toThrow()
       }
     })
   })
@@ -91,15 +94,26 @@ describe(`type guards`, () => {
       expect(isFunction(noop)).toBe(true)
 
       type FnDefinition = (count: number, who: string) => string
-      const fnImplementation: FnDefinition | any[] = ((
+
+      const fnImplementation: FnDefinition | any[] = (
         count: number,
         who: string
-      ) => `${who}: ${count} times`) as any
+      ) => {
+        if (!isNumber(count) || !isString(who)) {
+          throw new Error(`arguments doesn't match allowed types`)
+        }
+
+        return `${who}: ${count} times`
+      }
 
       if (isFunction(fnImplementation)) {
         // $ExpectType (count: number, who: string) => `${who}: ${count} times`
         expect(typeof fnImplementation).toBe('function')
         expect(fnImplementation(3, 'Me')).toBe('Me: 3 times')
+        // @ts-ignore
+        expect(() => fnImplementation(true, 123)).toThrowError(
+          `arguments doesn't match allowed types`
+        )
       } else {
         // @ts-ignore
         expect(() => fnImplementation(3, 'Me')).toThrow()
