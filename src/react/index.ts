@@ -1,3 +1,5 @@
 export * from './types'
 export * from './generic-rest'
 export * from './default-props'
+export * from './children'
+export * from './components/debug'

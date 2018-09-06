@@ -191,6 +191,14 @@ if (isObject<MyMap>(someObj)) {
 
 #### React/Preact related helpers:
 
+**`isEmptyChildren( children: ReactNode )`**
+
+- checks of Children.count === 0
+
+**`ChildrenAsFunction( children:any ): children is Function`**
+
+- similar to Children.only although checks if children is only a function. Useful for children as a function pattern. If not will throw an error.
+
 **`pickWithRest<Props, PickedProps>( props: object, pickProps: keyof PickedProps[] )`**
 
 - use for getting generic ...rest from object ( TS cannot do that by default )
@@ -259,6 +267,12 @@ class Button extends Component<Props> {
   }
 }
 ```
+
+#### React/Preact components:
+
+**`<Pre/>`**
+
+- for debugging data within your render
 
 ### 2. Compile time TypeScript type helpers
 
