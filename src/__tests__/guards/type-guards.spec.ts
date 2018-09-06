@@ -11,6 +11,7 @@ import {
   isPromise,
   isString,
 } from '../../guards'
+import { Empty } from '../../guards/types'
 
 // tslint:disable:no-magic-numbers
 
@@ -261,7 +262,7 @@ describe(`type guards`, () => {
       expect(isEmpty(str)).toBe(false)
 
       if (isEmpty(str)) {
-        // $ExpectType never
+        // $ExpectType ''
         expect(str[1].toUpperCase()).toThrow()
       } else {
         // $ExpectType 'hello'
@@ -275,7 +276,7 @@ describe(`type guards`, () => {
       expect(isEmpty(emptyArr)).toBe(true)
 
       if (isEmpty(arr)) {
-        // $ExpectType never
+        // $ExpectType never[]
         expect(arr[1]).toThrow()
       } else {
         // $ExpectType string[]
@@ -288,13 +289,15 @@ describe(`type guards`, () => {
     })
 
     it(`should return true for empty objects`, () => {
-      const obj = { one: 1, two: 2 }
+      const obj = { one: 1, two: 2 } as
+        | { one: number; two: number }
+        | Empty.Object
 
       expect(isEmpty(emptyObj)).toBe(true)
       expect(isEmpty(obj)).toBe(false)
 
       if (isEmpty(obj)) {
-        // $ExpectType never
+        // $ExpectType Record<string,never>
         // @ts-ignore
         expect(obj.one.toString()).toThrow()
       } else {
