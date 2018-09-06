@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.13.0"></a>
+
+# [0.13.0](https://www.github.com/Hotell/rex-tils/compare/v0.12.0...v0.13.0) (2018-09-06)
+
+### Features
+
+- **react:** add children helpers and Debug component (#19) ([f0b1f5a](https://www.github.com/Hotell/rex-tils/commit/f0b1f5a))
+
 <a name="0.12.0"></a>
 
 # [0.12.0](https://www.github.com/Hotell/rex-tils/compare/v0.11.1...v0.12.0) (2018-09-06)
