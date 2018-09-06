@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.11.0"></a>
+
+# [0.11.0](https://www.github.com/Hotell/rex-tils/compare/v0.10.0...v0.11.0) (2018-09-06)
+
+### Features
+
+- **type-guards:** add isEmpty ([7debc76](https://www.github.com/Hotell/rex-tils/commit/7debc76))
+- **types:** add Brand mapped type for nominal type checking capabilities ([d4f47ed](https://www.github.com/Hotell/rex-tils/commit/d4f47ed))
+- **types:** add new mapped types helpers ([399b2cf](https://www.github.com/Hotell/rex-tils/commit/399b2cf))
+- **types:** add PickWithType and PickWithTypeUnion mapped types ([609266f](https://www.github.com/Hotell/rex-tils/commit/609266f))
+
 <a name="0.10.0"></a>
 
 # [0.10.0](https://www.github.com/Hotell/rex-tils/compare/v0.9.0...v0.10.0) (2018-09-04)
