@@ -322,6 +322,26 @@ const obj: Result = {
 
 - Maybe types accept the provided type as well as null or undefined
 
+**`Brand<T,K>`**
+
+- use this mapped typed for creating types for proper nominal type checking
+  > for more info check this excellent [blog post about nominal typing in TypeScript](kudos to https://michalzalecki.com/nominal-typing-in-typescript/#approach-4-intersection-types-and-brands)
+
+```ts
+type USD = Brand<number, 'USD'>
+type EUR = Brand<number, 'EUR'>
+
+const usd = 10 as USD
+const eur = 10 as EUR
+
+function gross(net: USD, tax: USD): USD {
+  return (net + tax) as USD
+}
+
+gross(usd, usd) // ok
+gross(eur, usd) // Type '"EUR"' is not assignable to type '"USD"'.
+```
+
 **`UnionFromTuple<T>`**
 
 - extracts union type from tuple
