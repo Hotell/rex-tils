@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.11.1"></a>
+
+## [0.11.1](https://www.github.com/Hotell/rex-tils/compare/v0.11.0...v0.11.1) (2018-09-06)
+
+### Bug Fixes
+
+- **type-guards:** properly narrow isFunction guard to potentional function type (#17) ([09fa4c8](https://www.github.com/Hotell/rex-tils/commit/09fa4c8))
+
 <a name="0.11.0"></a>
 
 # [0.11.0](https://www.github.com/Hotell/rex-tils/compare/v0.10.0...v0.11.0) (2018-09-06)
