@@ -1,9 +1,12 @@
 import {
+  AnyFunction,
   Brand,
   Keys,
   KnownKeys,
   Omit,
   OptionalKnownKeys,
+  PickWithType,
+  PickWithTypeUnion,
   RequiredKnownKeys,
   UnionFromTuple,
 } from '../types'
@@ -121,6 +124,97 @@ describe(`generic TS type utils`, () => {
       result = gross(eur, usd) // Type '"EUR"' is not assignable to type '"USD"'.
 
       expect(result).toBe(20)
+    })
+  })
+
+  describe(`PickWith* family`, () => {
+    it(`should extract only types from object by type condition`, () => {
+      type Person = {
+        id: number
+        name: string
+        lastName: string
+        address: {
+          street: string
+          nr: number
+        }
+        load: () => Promise<Person>
+      }
+
+      // $ExpectType {id: number; name: string; lastName: string; }
+      type JsonPrimitive = PickWithTypeUnion<Person, number | string>
+
+      const jsonPrimitive: JsonPrimitive = {
+        id: 1,
+        lastName: 'foo',
+        name: 'boo',
+      }
+      expect(jsonPrimitive).toBeTruthy()
+
+      // $ExpectType {address: { street: string; nr: number }, load: () => Promise<Person>;}
+      type JsonComplex = PickWithTypeUnion<Person, object>
+
+      const jsonComplex: JsonComplex = {
+        address: {
+          nr: 123,
+          street: 'dddd',
+        },
+        load: () => Promise.resolve({} as Person),
+      }
+      expect(jsonComplex).toBeTruthy()
+
+      // $ExpectType {load: () => Promise<Person>;}
+      type JsonFunctionOnly = PickWithTypeUnion<Person, AnyFunction>
+
+      const jsonFunctionOnly: JsonFunctionOnly = {
+        load: () => Promise.resolve({} as Person),
+      }
+      expect(jsonFunctionOnly).toBeTruthy()
+
+      // $ExpectType { married: boolean; }
+      type BooleanValuesOnly = PickWithType<
+        {
+          street: string | null
+          married: boolean
+          id?: string
+        },
+        boolean
+      >
+
+      const booleanValuesOnly: BooleanValuesOnly = {
+        married: true,
+      }
+      expect(booleanValuesOnly).toBeTruthy()
+
+      // $ExpectType { id?: string | undefined; }
+      type OptionalValues = PickWithType<
+        {
+          street: string | null
+          city: string | null
+          id?: string
+        },
+        undefined
+      >
+
+      const optionalValuesOnly: OptionalValues = {
+        id: '123',
+      }
+      expect(optionalValuesOnly).toBeTruthy()
+
+      // $ExpectType { street: string | null; city: string | null; }
+      type NullableValues = PickWithType<
+        {
+          street: string | null
+          city: string | null
+          id?: string
+        },
+        null
+      >
+
+      const nullableValues: NullableValues = {
+        city: 'New Oakland',
+        street: null,
+      }
+      expect(nullableValues).toBeTruthy()
     })
   })
 })
