@@ -98,3 +98,24 @@ export type OptionalKnownKeys<T> = {
 } extends { [_ in keyof T]: infer U }
   ? U
   : never
+
+/**
+ * use this mapped typed for creating types for proper nominal type checking
+ *
+ * kudos to https://michalzalecki.com/nominal-typing-in-typescript/#approach-4-intersection-types-and-brands
+ *
+ * @example
+ * ```ts
+ * type USD = Brand<number, "USD">
+ * type EUR = Brand<number, "EUR">
+ *
+ * const usd = 10 as USD
+ * const eur = 10 as EUR
+ *
+ * const gross = (net: USD, tax: USD): USD => (net + tax) as USD
+ *
+ * gross(usd, usd); // ok
+ * gross(eur, usd); // Type '"EUR"' is not assignable to type '"USD"'.
+ * ```
+ */
+export type Brand<K, T> = K & { __brand: T }

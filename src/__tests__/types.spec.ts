@@ -1,4 +1,5 @@
 import {
+  Brand,
   Keys,
   KnownKeys,
   Omit,
@@ -96,6 +97,30 @@ describe(`generic TS type utils`, () => {
       const actual: Test = 'two'
 
       expect(actual).toBe('two')
+    })
+  })
+
+  describe(`Brand`, () => {
+    it(`should properly use nominal typing on brand like types`, () => {
+      // tslint:disable:no-magic-numbers
+      type USD = Brand<number, 'USD'>
+      type EUR = Brand<number, 'EUR'>
+
+      const usd = 10 as USD
+      const eur = 10 as EUR
+
+      function gross(net: USD, tax: USD): USD {
+        return (net + tax) as USD
+      }
+
+      // tslint:disable-next-line:prefer-const
+      let result: number
+
+      result = gross(usd, usd) // ok
+      // @ts-ignore
+      result = gross(eur, usd) // Type '"EUR"' is not assignable to type '"USD"'.
+
+      expect(result).toBe(20)
     })
   })
 })
