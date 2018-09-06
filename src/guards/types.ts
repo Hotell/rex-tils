@@ -22,8 +22,12 @@ export interface NonEmptyArray<T> extends Array<T> {
 
 // https://twitter.com/karoljmajewski/status/1037618989801893888?s=20
 export type Empty = Empty.Array | Empty.Object | Empty.String
-declare namespace Empty {
+export declare namespace Empty {
   type String = ''
   type Array = never[]
   type Object = Record<string, never>
 }
+
+export type Bottom<T> = T extends string
+  ? Empty.String
+  : T extends any[] ? Empty.Array : T extends object ? Empty.Object : never

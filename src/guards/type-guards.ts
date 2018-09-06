@@ -1,4 +1,5 @@
 import { Nullable } from '../types'
+import { Bottom, Empty } from './types'
 
 export const isBlank = <T>(value: T): value is Nullable<T> => value == null
 export const isPresent = <T>(value: T): value is NonNullable<T> => value != null
@@ -48,9 +49,9 @@ export const isPromise = (value: any): value is PromiseLike<any> =>
  * Checks if string OR array OR object are empty
  * If you provide another value to check it will throw an error
  */
-export const isEmpty = <T extends string | object | any[]>(
-  value: T
-): value is never => {
+export const isEmpty = <T extends string | object>(
+  value: T | Empty
+): value is Bottom<T> => {
   if (isString(value) || isArray(value)) {
     return value.length === 0
   }

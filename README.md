@@ -147,9 +147,10 @@ rex-tils API is tiny and consist of 2 categories:
 
 - checks if value is not null nor undefined
 
-**`isEmpty<T extends string | object | any[]>(value:T): T`**
+**`isEmpty<T extends string | object>(value:T): Empty<T>`**
 
-- checks if value is empty for string | array | object otherwise it throws an error
+- checks if value is empty for string | array | object otherwise it throws an error.
+- also it narrows the type to empty type equivalent
 
 **`isFunction(value:any)`**
 
