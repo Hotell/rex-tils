@@ -119,3 +119,48 @@ export type OptionalKnownKeys<T> = {
  * ```
  */
 export type Brand<K, T> = K & { __brand: T }
+
+/**
+ * Pick key-values from Base provided by Condition generic type. Generic can be an union.
+ *
+ * **NOTE:**
+ * It doesn't work for undefined | null values. for that use `PickWithType`
+ *
+ * @example
+ * ```ts
+ * type Person = { id: number; name: string; lastName: string; address: { street: string; nr: number; } load: () => Promise<Person> }
+ *
+ * // $ExpectType { id: number; name: string; lastName: string; }
+ * type JsonPrimitive = PickWithTypeUnion<Person, number | string>
+ * ```
+ */
+export type PickWithTypeUnion<Base, Condition> = Pick<
+  Base,
+  { [Key in keyof Base]: Base[Key] extends Condition ? Key : never }[keyof Base]
+>
+
+/**
+ * Pick key-values from Base provided by Condition generic type. Generic needs to be one type from `null | undefined | object | string | number | boolean`
+ *
+ * @example
+ * ```ts
+ * type Person = { id: number; name: string; lastName: string; address: { street: string; nr: number; } load: () => Promise<Person> }
+ *
+ * // $ExpectType { id: number; }
+ * type JsonPrimitive = PickWithTypeUnion<Person, number>
+ *
+ * // $ExpectType { street: string | null; city: string | null; }
+ * type NullableValues = PickWithType<{ street: string | null; city: string | null; id?: string }, null > \
+ * ```
+ */
+export type PickWithType<
+  Base,
+  Condition extends null | undefined | object | string | number | boolean
+> = Pick<
+  Base,
+  {
+    [Key in keyof Base]: Condition extends Extract<Base[Key], Condition>
+      ? Key
+      : never
+  }[keyof Base]
+>

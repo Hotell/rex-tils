@@ -381,6 +381,17 @@ gross(eur, usd) // Type '"EUR"' is not assignable to type '"USD"'.
 
 - gets optional only known keys from object which contains index type `[key:string]: any`
 
+**`PickWithTypeUnion<Base, Condition>`**
+
+- Pick key-values from Base provided by Condition generic type. Generic can be an union.
+
+> **NOTE:**
+> It doesn't work for undefined | null values. for that use `PickWithType`
+
+**`PickWithType<Base, Condition>`**
+
+- Pick key-values from Base provided by Condition generic type. Generic needs to be one type from `null | undefined | object | string | number | boolean`
+
 #### React related types:
 
 **`GetComponentProps<T>`**
