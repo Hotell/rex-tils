@@ -17,5 +17,5 @@ export const ChildrenAsFunction = (
     )
   }
 
-  return true
+  return children
 }

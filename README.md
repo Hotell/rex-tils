@@ -197,7 +197,7 @@ if (isObject<MyMap>(someObj)) {
 
 **`ChildrenAsFunction( children:any ): children is Function`**
 
-- similar to Children.only although checks if children is only a function. Useful for children as a function pattern. If not will throw an error.
+- similar to Children.only although checks if children is only a function. Useful for children as a function pattern. If not will throw an error otherwise narrows children type to function and returns it.
 
 **`pickWithRest<Props, PickedProps>( props: object, pickProps: keyof PickedProps[] )`**
 
