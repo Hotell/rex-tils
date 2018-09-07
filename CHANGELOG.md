@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.13.1"></a>
+
+## [0.13.1](https://www.github.com/Hotell/rex-tils/compare/v0.13.0...v0.13.1) (2018-09-07)
+
+### Bug Fixes
+
+- **react:** retrurn children from ChildrenAsFunction to mirror Children.only ([689b53f](https://www.github.com/Hotell/rex-tils/commit/689b53f))
+
 <a name="0.13.0"></a>
 
 # [0.13.0](https://www.github.com/Hotell/rex-tils/compare/v0.12.0...v0.13.0) (2018-09-06)

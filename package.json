@@ -1,6 +1,6 @@
 {
   "name": "@martin_hotell/rex-tils",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "Type safe utils for redux actions and various guard utils",
   "main": "./bundles/index.umd.js",
   "module": "./esm5/index.js",
