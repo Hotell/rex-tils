@@ -29,7 +29,7 @@ class Test extends Component<
       return error!.message
     }
 
-    return ChildrenAsFunction(children) && children({ who: 'World' })
+    return ChildrenAsFunction(children)({ who: 'World' })
   }
 }
 
