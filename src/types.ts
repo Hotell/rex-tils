@@ -20,6 +20,9 @@ export type Omit<T, K> = Pick<T, Exclude<keyof T, keyof K>>
  */
 export type Nullable<T> = T extends null | undefined ? T : never
 
+export type Primitive<T> = T extends object ? never : T
+export type NonPrimitive<T> = T extends object ? T : never
+
 /**
  * Maybe types accept the provided type as well as null or undefined
  */

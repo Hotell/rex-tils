@@ -1,5 +1,5 @@
-import { Nullable } from '../types'
-import { Bottom, Empty } from './types'
+import { Maybe, NonPrimitive, Nullable } from '../types'
+import { Bottom, Empty, NonArray } from './types'
 
 export const isBlank = <T>(value: T): value is Nullable<T> => value == null
 export const isPresent = <T>(value: T): value is NonNullable<T> => value != null
@@ -22,9 +22,9 @@ export const isArray = <T>(value: any): value is Array<T> =>
  * @example
  * ```ts
  * type MyMap = { who: string; age: number }
- * declare const someObj: object | string | number
+ * declare const someObj: MyMap | string | number
  *
- * if (isObject<MyMap>(someObj)) {
+ * if (isObject(someObj)) {
  *  // $ExpectType MyMap
  *  someObj
  * } else {
@@ -33,7 +33,9 @@ export const isArray = <T>(value: any): value is Array<T> =>
  * }
  * ```
  */
-export const isObject = <T extends object>(value: any): value is T =>
+export const isObject = <T extends Maybe<{}>>(
+  value: T
+): value is NonArray<NonPrimitive<NonNullable<T>>> =>
   value != null && !Array.isArray(value) && typeof value === 'object'
 
 export const isDate = (value: any): value is Date =>

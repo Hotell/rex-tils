@@ -1,6 +1,11 @@
 type Blank = null | undefined | void
 
 /**
+ * @private
+ */
+export type NonArray<T> = T extends any[] ? never : T
+
+/**
  * // object collects {} and Array<any> so adding both {} and Array<any> is not needed
  * @private
  */
