@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+
+# [1.0.0](https://www.github.com/Hotell/rex-tils/compare/v0.13.2...v1.0.0) (2018-09-24)
+
+### Features
+
+- **type-guards:** improve isObject type narrowing and implement new mapped types (#20) ([e13da70](https://www.github.com/Hotell/rex-tils/commit/e13da70))
+
+### BREAKING CHANGES
+
+- **type-guards:** consumers of isObject which used previously explicitly type generic for constraint
+  may experience compile errors because now `isObject` does type narrowing properly without any imperative need to define generic on function call. To fix this just remove those explicit generic types on object as `isObject` will now work correctly as expected:
+
+**Before:**
+
+```ts
+const possibleObj: SomeModel | string = getData()
+
+if (isObject<SomeModel>(possibleObj)) {
+  // possibleObj is SomeModel
+}
+```
+
+**After:**
+
+```ts
+const possibleObj: SomeModel | string = getData()
+
+if (isObject(possibleObj)) {
+  // possibleObj is SomeModel
+}
+```
+
 <a name="0.13.2"></a>
 
 ## [0.13.2](https://www.github.com/Hotell/rex-tils/compare/v0.13.1...v0.13.2) (2018-09-10)
