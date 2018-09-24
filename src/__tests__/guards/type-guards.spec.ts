@@ -55,13 +55,13 @@ describe(`type guards`, () => {
   })
 
   describe(`isObject`, () => {
-    it(`should return false if value is not an object map`, () => {
-      type MyMap = { who: string; age: number }
-      const possibleValidObj = {
-        who: 'John',
-        age: 32,
-      } as MyMap | string | boolean
+    type MyMap = { who: string; age: number }
+    const possibleValidObj = {
+      who: 'John',
+      age: 32,
+    } as MyMap | string | boolean
 
+    it(`should return false if value is not an object map`, () => {
       expect(isObject(123)).toBe(false)
       expect(isObject('hello')).toBe(false)
       expect(isObject(null)).toBe(false)
@@ -69,10 +69,11 @@ describe(`type guards`, () => {
       expect(isObject(true)).toBe(false)
       expect(isObject(noop)).toBe(false)
       expect(isObject(emptyArr)).toBe(false)
-
       expect(isObject(emptyObj)).toBe(true)
+    })
 
-      if (isObject<MyMap>(possibleValidObj)) {
+    it(`should properly type constraint object via inference`, () => {
+      if (isObject(possibleValidObj)) {
         // $ExpectType {one:number}
         expect(possibleValidObj).toHaveProperty('age')
         const { age } = possibleValidObj
@@ -83,6 +84,22 @@ describe(`type guards`, () => {
         // @ts-ignore
         const { one } = possibleValidObj
         expect(one).toThrow()
+      }
+    })
+
+    it(`should properly type constraint object with array exclusion via inference`, () => {
+      const arr = [1, 2, 3] as number[] | { one: 1 }
+      if (isObject(arr)) {
+        // $ExpectType { one: 1 }
+        expect(arr).toThrow()
+        // @ts-ignore
+        const [first] = arr
+        expect(first).toThrow()
+      } else {
+        // $ExpectType number[]
+        expect(arr).toHaveProperty('length')
+        const [first] = arr
+        expect(first).toBe(1)
       }
     })
   })

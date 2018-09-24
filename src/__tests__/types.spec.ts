@@ -3,10 +3,12 @@ import {
   Brand,
   Keys,
   KnownKeys,
+  NonPrimitive,
   Omit,
   OptionalKnownKeys,
   PickWithType,
   PickWithTypeUnion,
+  Primitive,
   RequiredKnownKeys,
   UnionFromTuple,
 } from '../types'
@@ -215,6 +217,36 @@ describe(`generic TS type utils`, () => {
         street: null,
       }
       expect(nullableValues).toBeTruthy()
+    })
+  })
+
+  describe('standard lib mapped types extensions', () => {
+    it(`should correctly narrow primitive types via Primitive<T>`, () => {
+      type Test = boolean | number | [1, 2, 4] | string[] | { one: number }
+
+      // $ExpectType boolean | number
+      type Expected = Primitive<Test>
+
+      const actual: Test = { one: 111 }
+      // $ExpectError
+      // @ts-ignore
+      const expected: Expected = { one: 111 }
+
+      expect(actual).toEqual(expected)
+    })
+
+    it(`should correctly narrow non-primitive types via NonPrimitive<T>`, () => {
+      type Test = boolean | number | [1, 2, 4] | string[] | { one: number }
+
+      // $ExpectType [1, 2, 4] | string[] | { one: number; }
+      type Expected = NonPrimitive<Test>
+
+      const actual: Test = 2222
+      // $ExpectError
+      // @ts-ignore
+      const expected: Expected = 2222
+
+      expect(actual).toBe(expected)
     })
   })
 })

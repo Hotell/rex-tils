@@ -162,15 +162,16 @@ rex-tils API is tiny and consist of 2 categories:
 
 **`isArray(value:any)`**
 
-**`isObject<T extends object>(value:any): T`**
+**`isObject<T>(value:T): T`**
 
-- to get proper type object within if branch, you need to explicitly provide generic value otherwise it will be narrowed to `object` only
+- normalized check if JS value is an object. That means anything that is not an array, not null/undefined but typeof value equals to 'object'
+- it will also properly narrow type within the branch
 
 ```ts
 type MyMap = { who: string; age: number }
-declare const someObj: object | string | number
+declare const someObj: MyMap | string | number
 
-if (isObject<MyMap>(someObj)) {
+if (isObject(someObj)) {
   // $ExpectType MyMap
   someObj
 } else {
@@ -379,6 +380,14 @@ const obj: Result = {
   three: false,
 }
 ```
+
+**`Primitive<T>`**
+
+- narrows type to primitive JS value ( boolean, string, number, symbol )
+
+**`NonPrimitive<T>`**
+
+- narrows type to non-primitive JS value ( object, function, array )
 
 **`Nullable<T>`**
 
