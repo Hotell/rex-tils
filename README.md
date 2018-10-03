@@ -267,11 +267,13 @@ function test<OriginalProps>(props: OriginalProps) {
 - it's just identity function with proper props type resolution
 
 ```tsx
+// $ExpectType {onClick: (e: MouseEvent<HTMLElement>) => void, children: ReactNode, color?:'blue' | 'green' | 'red', type?: 'button' | 'submit'}
 type Props = {
   onClick: (e: MouseEvent<HTMLElement>) => void
   children: ReactNode
 } & DefaultProps<typeof defaultProps>
 
+// $ExpectType Readonly<{color:'blue' | 'green' | 'red', type: 'button' | 'submit'}>
 const defaultProps = DefaultProps({
   color: 'blue' as 'blue' | 'green' | 'red',
   type: 'button' as 'button' | 'submit',
