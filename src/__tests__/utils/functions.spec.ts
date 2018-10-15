@@ -1,5 +1,5 @@
 // tslint:disable:no-magic-numbers
-import { identity, noop } from '../../utils'
+import { Enum, identity, noop } from '../../utils'
 
 describe(`function utils`, () => {
   it(`should be just a no operation function`, () => {
@@ -21,5 +21,17 @@ describe(`function utils`, () => {
 
     // $ExpectType (name: string, age: number) => string
     expect(identity(fn)).toBe(fn)
+  })
+
+  it(`should create type safe enums via object map`, () => {
+    // $ExpectType Readonly<{ No: "No"; Yes: "Yes"; }>
+    const AnswerResponse = Enum('No', 'Yes')
+
+    expect(AnswerResponse).toEqual({ No: 'No', Yes: 'Yes' })
+
+    // $ExpectType Readonly<{ RED: "RED"; GREEN: "GREEN"; BLUE: "BLUE"; }>
+    const Colors = Enum('RED', 'GREEN', 'BLUE')
+
+    expect(Colors).toEqual({ RED: 'RED', GREEN: 'GREEN', BLUE: 'BLUE' })
   })
 })
