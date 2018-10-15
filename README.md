@@ -23,7 +23,7 @@ npm install @martin_hotell/rex-tils
 
 > **Note:**
 >
-> 1.  This library supports only `TS >= 2.8` ( because it uses conditional types #dealWithIt )
+> 1.  This library supports only `TS >= 3.1` ( because it uses [conditional types](http://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html#conditional-types) and [generic rest arguments](http://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-1.html#mapped-types-on-tuples-and-arrays) #dealWithIt )
 > 2.  For leveraging Rx `ofType` operator within your Epics/Effects you need to install `rxjs>= 6.x`
 
 ## Getting started

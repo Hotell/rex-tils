@@ -30,6 +30,7 @@ const ROOT = resolve(__dirname, '..')
 const DIST = resolve(ROOT, 'dist')
 
 /**
+ * Object literals are open-ended for js checking, so we need to be explicit
  * @type {{entry:{esm5: string, esm2015: string},bundles:string}}
  */
 const PATHS = {
@@ -96,15 +97,13 @@ const UMDconfig = {
       resolve(PATHS.bundles, 'index.umd.js'),
       ifProduction()
     ),
-    // file: getOutputFileName('dist/bundles/index.umd.js', ifProduction()),
     format: 'umd',
     name: LIB_NAME,
     sourcemap: true,
   },
-  plugins: /** @type {Plugin[]} */ (removeEmpty([
-    ...plugins,
-    ifProduction(uglify()),
-  ])),
+  plugins: removeEmpty(
+    /** @type {Plugin[]} */ ([...plugins, ifProduction(uglify())])
+  ),
 }
 
 /**
@@ -123,10 +122,9 @@ const FESMconfig = {
       sourcemap: true,
     },
   ],
-  plugins: /** @type {Plugin[]} */ (removeEmpty([
-    ...plugins,
-    ifProduction(terser()),
-  ])),
+  plugins: removeEmpty(
+    /** @type {Plugin[]} */ ([...plugins, ifProduction(terser())])
+  ),
 }
 
 export default [UMDconfig, FESMconfig]
