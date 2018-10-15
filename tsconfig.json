@@ -13,8 +13,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    // change this to any hyperscript like function that you're using
-    "jsxFactory": "React.createElement",
     "sourceMap": true,
     "outDir": "dist/esm5",
     "declaration": true,
@@ -29,7 +27,9 @@
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "**/__tests__",
+    "**/**/*.spec.*",
+    "**/**/*.test.*"
   ],
   "compileOnSave": false,
   "buildOnSave": false
