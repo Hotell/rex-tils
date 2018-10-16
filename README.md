@@ -190,6 +190,41 @@ if (isObject(someObj)) {
 
 **`identity<T>(value:T):T`**
 
+**`Enum(...tokens:string[]): object`**
+
+As described in [10 TypeScript Pro tips article](https://medium.com/@martin_hotell/10-typescript-pro-tips-patterns-with-or-without-react-5799488d6680), we don't recommend to use `enum` feature within your codebase. Instead you can leverage this small utility function which comes as both function and type alias to get proper enum object map and type literal, if you really need enums in runtime.
+
+```ts
+// enums.ts
+
+// $ExpectType Readonly<{ No: "No"; Yes: "Yes"; }>
+ export const AnswerResponse = Enum('No', 'Yes')
+ // $ExpectType 'No' | 'Yes'
+ export type AnswerResponse = Enum(typeof AnswerResponse)
+
+ // consumer.ts
+
+ import {AnswerResponse} from './enums'
+
+ export const respond = (
+   recipient: string,
+   // 1. 👉 enum used as type
+   message: AnswerResponse
+  ) => { /*...*/}
+
+ // usage.ts
+
+ import {respond} from './consumer'
+ import {AnswerResponse} from './enums'
+
+ respond('Johnny 5','Yes')
+ respond(
+   'Johnny 5',
+   // 2. 👉  enum used as reference
+   AnswerResponse.No
+   )
+```
+
 #### React/Preact related helpers:
 
 **`isEmptyChildren( children: ReactNode )`**
