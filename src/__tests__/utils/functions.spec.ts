@@ -39,6 +39,7 @@ describe(`function utils`, () => {
     expect(Colors).toEqual({ RED: 'RED', GREEN: 'GREEN', BLUE: 'BLUE' })
 
     try {
+      // tslint:disable:no-unused-variable
       const test: AnswerResponse = AnswerResponse.Yes
       const test2: AnswerResponse = 'Yes'
       // $ExpectError
@@ -49,6 +50,7 @@ describe(`function utils`, () => {
     }
 
     try {
+      // tslint:disable:no-unused-variable
       const test: Colors = Colors.BLUE
       const test2: Colors = 'GREEN'
       // $ExpectError
