@@ -24,14 +24,38 @@ describe(`function utils`, () => {
   })
 
   it(`should create type safe enums via object map`, () => {
+    // $ExpectType 'No' | 'Yes'
+    type AnswerResponse = Enum<typeof AnswerResponse>
     // $ExpectType Readonly<{ No: "No"; Yes: "Yes"; }>
     const AnswerResponse = Enum('No', 'Yes')
 
     expect(AnswerResponse).toEqual({ No: 'No', Yes: 'Yes' })
 
+    // $ExpectType 'RED' | 'GREEN' | 'BLUE'
+    type Colors = Enum<typeof Colors>
     // $ExpectType Readonly<{ RED: "RED"; GREEN: "GREEN"; BLUE: "BLUE"; }>
     const Colors = Enum('RED', 'GREEN', 'BLUE')
 
     expect(Colors).toEqual({ RED: 'RED', GREEN: 'GREEN', BLUE: 'BLUE' })
+
+    try {
+      const test: AnswerResponse = AnswerResponse.Yes
+      const test2: AnswerResponse = 'Yes'
+      // $ExpectError
+      // @ts-ignore
+      const test3: AnswerResponse = 'blah'
+    } catch (e) {
+      expect(e).toBeTruthy()
+    }
+
+    try {
+      const test: Colors = Colors.BLUE
+      const test2: Colors = 'GREEN'
+      // $ExpectError
+      // @ts-ignore
+      const test3: Colors = 'blah'
+    } catch (e) {
+      expect(e).toBeTruthy()
+    }
   })
 })

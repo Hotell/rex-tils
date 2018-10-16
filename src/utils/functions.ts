@@ -24,3 +24,27 @@ export const Enum = <T extends string[]>(...args: T) => {
     }
   }, Object.create(null)) as { [P in UnionFromTuple<typeof args>]: P })
 }
+
+/**
+ * Use for getting literal type out of const myEnum = Enum(...) if you need it and export via token merge
+ *
+ * @example
+ * ```ts
+ * // $ExpectType Readonly<{ No: "No"; Yes: "Yes"; }>
+ * export const AnswerResponse = Enum('No', 'Yes')
+ * // $ExpectType 'No' | 'Yes'
+ * export type AnswerResponse = Enum(typeof AnswerResponse)
+ *
+ * // consumer.ts
+ * import {AnswerResponse} from './enums'
+ * export const respond = (recipient: string, message: AnswerResponse) => { }
+ *
+ * // usage.ts
+ * import {respond} from './consumer'
+ * import {AnswerResponse} from './enums'
+ *
+ * respond('Johnny 5','Yes')
+ * respond('Johnny 5', AnswerResponse.No)
+ * ```
+ */
+export type Enum<T extends object> = T[keyof T]
