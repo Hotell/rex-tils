@@ -476,6 +476,26 @@ gross(eur, usd) // Type '"EUR"' is not assignable to type '"USD"'.
 
 - extracts union type from tuple
 
+**`Values<T>`**
+
+- `Values<T>` represents the union type of all the value types of the enumerable properties in an object Type T.
+
+```tsx
+type Props = {
+  name: string
+  age: number
+}
+
+// The following two types are equivalent:
+// $ExpectType string | number
+type Prop$Values = Values<Props>
+
+// $ExpectType string
+const name: Prop$Values = 'Jon'
+// $ExpectType number
+const age: Prop$Values = 42
+```
+
 **`Keys<T>`**
 
 - `keyof` doesn't work/distribute on union types. This mapped type fixes this issue

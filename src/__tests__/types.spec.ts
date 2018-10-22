@@ -12,6 +12,7 @@ import {
   Primitive,
   RequiredKnownKeys,
   UnionFromTuple,
+  Values,
 } from '../types'
 
 describe(`generic TS type utils`, () => {
@@ -69,6 +70,35 @@ describe(`generic TS type utils`, () => {
       actual = false
 
       expect(actual).toBe(false)
+    })
+  })
+
+  describe(`Values`, () => {
+    // tslint:disable:no-magic-numbers
+    it(`should return all object values as a union type`, () => {
+      type Props = {
+        name: string
+        age: number
+      }
+
+      // The following two types are equivalent:
+      // $ExpectType string | number
+      type Prop$Values = Values<Props>
+
+      // $ExpectType string
+      const name: Prop$Values = 'Jon'
+      // $ExpectType number
+      const age: Prop$Values = 42
+
+      // Error! function is not part of the union type
+      // $ExpectError
+      // @ts-ignore
+      const fn: Prop$Values = () => {
+        return
+      }
+
+      expect(name).toBe('Jon')
+      expect(age).toBe(42)
     })
   })
 
