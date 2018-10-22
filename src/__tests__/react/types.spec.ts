@@ -1,54 +1,144 @@
-import { Component, SFC } from 'react'
+// tslint:disable:no-magic-numbers
 
-import { GetComponentProps, GetComponentPropsAndState } from '../../react'
+import { Children, Component, SFC } from 'react'
+
+import {
+  ChildrenArray,
+  ElementConfig,
+  ElementProps,
+  ElementState,
+} from '../../react'
 
 describe(`React helper types`, () => {
-  it(`should extract prop type from Function and Class component`, () => {
-    type Props = { who: string }
+  describe(`ElementState`, () => {
     type State = { count: number }
-    class Test extends Component<Props, State> {}
-    const TestFn = (_props: Props) => null
-    const TestFnViaGeneric: SFC<Props> = (_props) => null
+    class MyComponentWithState extends Component<{}, State> {}
 
-    // $ExpectType {who: string}
-    type PropsFromComponent = GetComponentProps<Test>
+    it(`should get Component State`, () => {
+      // $ExpectType {count: number}
+      type CmponentState = ElementState<typeof MyComponentWithState>
 
-    // $ExpectType {who: string}
-    type PropsFromFunction = GetComponentProps<typeof TestFn>
+      const state: CmponentState = {
+        count: 1,
+      }
 
-    // $ExpectType {who: string}
-    type PropsFromFunction2 = GetComponentProps<typeof TestFnViaGeneric>
-
-    const props: PropsFromComponent & PropsFromFunction = {
-      who: 'Me',
-    } as PropsFromFunction2
-
-    expect(props).toEqual(props)
+      expect(state).toEqual({
+        count: 1,
+      })
+    })
   })
 
-  it(`should extract props and state type from Class component`, () => {
-    type Props = { who: string }
-    type State = { count: number }
-    class Test extends Component<Props> {}
-    class TestWithState extends Component<Props, State> {}
+  describe(`Flow React helpers`, () => {
+    type Props = { foo: number }
 
-    // $ExpectType {props: {who: string}, state: {}}
-    type PropsFromComponent = GetComponentPropsAndState<Test>
+    const defaultProps = { foo: 42 }
 
-    // $ExpectType {props: {who: string}, state: {count: number}}
-    type PropsAndStateFromComponent = GetComponentPropsAndState<TestWithState>
+    class MyComponent extends Component<Props> {
+      render() {
+        return this.props.foo
+      }
+    }
+    const MyComponentFn = (props: Props) => props.foo
+    const MyComponentFnViaGeneric: SFC<Props> = (_props) => null
 
-    const props: PropsFromComponent = {
-      props: { who: 'Me' },
-      state: {},
+    class MyComponentWithDefault extends Component<Props> {
+      static defaultProps = defaultProps
+      render() {
+        return this.props.foo
+      }
     }
 
-    const propsAndState: PropsAndStateFromComponent = {
-      props: { who: 'Me' },
-      state: { count: 0 },
-    }
+    const MyComponentFnWithDefault = (props: Props) => props.foo
+    MyComponentFnWithDefault.defaultProps = defaultProps
 
-    expect(props).toEqual(props)
-    expect(propsAndState).toEqual(propsAndState)
+    const MyComponentFnWithDefaultViaGeneric: SFC<Props> = (_props) => null
+    MyComponentFnWithDefaultViaGeneric.defaultProps = defaultProps
+
+    describe(`ElementProps`, () => {
+      it(`should extract props from Component class`, () => {
+        type Test = ElementProps<typeof MyComponent>
+        const value: Test = { foo: 42 }
+
+        expect(value).toEqual({ foo: 42 })
+
+        // $ExpectError
+        // @ts-ignore
+        const value2: Test = {}
+      })
+
+      it(`should extract props from Function component`, () => {
+        type Test = ElementProps<typeof MyComponentFn>
+        const value: Test = { foo: 42 }
+
+        expect(value).toEqual({ foo: 42 })
+
+        // $ExpectError
+        // @ts-ignore
+        const value2: Test = {}
+      })
+
+      it(`should extract props from Function component defined via SFC<T>`, () => {
+        type Test = ElementProps<typeof MyComponentFnViaGeneric>
+        const value: Test = { foo: 42 }
+
+        expect(value).toEqual({ foo: 42 })
+
+        // $ExpectError
+        // @ts-ignore
+        const value2: Test = {}
+      })
+    })
+
+    describe(`ElementConfig`, () => {
+      it(`should extract props from Component class with defaultProps in mind`, () => {
+        type Test = ElementConfig<typeof MyComponentWithDefault>
+        const value: Test = { foo: 42 }
+
+        expect(value).toEqual({ foo: 42 })
+
+        const value2: Test = {}
+        expect(value2).toEqual({})
+      })
+
+      it(`should extract props from Function component with defaultProps in mind`, () => {
+        type Test = ElementConfig<typeof MyComponentFnWithDefault>
+        const value: Test = { foo: 42 }
+
+        expect(value).toEqual({ foo: 42 })
+
+        const value2: Test = {}
+        expect(value2).toEqual({})
+      })
+
+      it(`should extract props from Function component defined via SFC<T> with defaultProps in mind`, () => {
+        type Test = ElementConfig<typeof MyComponentFnWithDefaultViaGeneric>
+        const value: Test = { foo: 42 }
+
+        expect(value).toEqual({ foo: 42 })
+
+        const value2: Test = {}
+        expect(value2).toEqual({})
+      })
+    })
+
+    describe(`ChildrenArray`, () => {
+      it(`should properly work for children annotation`, () => {
+        // A children array can be a single value...
+        const children: ChildrenArray<number> = 42
+
+        expect(children).toEqual(42)
+
+        // ...or an arbitrarily nested array.
+        const childrenDeep: ChildrenArray<number> = [[1, 2], 3, [4, 5]]
+
+        expect(childrenDeep).toEqual([[1, 2], 3, [4, 5]])
+
+        // Using the `React.Children` API can flatten the array.
+        // @FIXME react.d.ts returns React.ReactChild[], so we have to cast the value
+        const array: number[] = Children.toArray(childrenDeep) as number[]
+
+        expect(array).toEqual([1, 2, 3, 4, 5])
+      })
+    })
   })
 })
