@@ -1,5 +1,5 @@
 import { __rest } from 'tslib'
-import { Omit } from '../types'
+import { Diff } from '../types'
 
 /**
  * Use this to get properly typed {...rest} when used with generics. ( React HoC )
@@ -28,7 +28,7 @@ import { Omit } from '../types'
 export const pickWithRest = <
   Props extends object = object,
   PickedProps extends object = object,
-  Rest = { rest: Omit<Props, PickedProps> }
+  Rest = { rest: Diff<Props, PickedProps> }
 >(
   props = {} as object,
   pickProps = [] as (keyof PickedProps)[]

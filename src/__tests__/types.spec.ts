@@ -1,6 +1,7 @@
 import {
   AnyFunction,
   Brand,
+  Diff,
   Keys,
   KnownKeys,
   NonPrimitive,
@@ -22,11 +23,29 @@ describe(`generic TS type utils`, () => {
         three: boolean
       }
 
+      type R = Omit<A, 'two'>
+
+      const obj: R = {
+        one: '123',
+        three: false,
+      }
+
+      expect(obj).toEqual(obj)
+    })
+  })
+  describe('Diff', () => {
+    it(`should Diff two object types properly`, () => {
+      type A = {
+        one: string
+        two: number
+        three: boolean
+      }
+
       type B = {
         two: number
       }
 
-      type R = Omit<A, B>
+      type R = Diff<A, B>
 
       const obj: R = {
         one: '123',

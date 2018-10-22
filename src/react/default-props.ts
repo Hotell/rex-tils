@@ -1,4 +1,4 @@
-import { Omit } from '../types'
+import { Diff } from '../types'
 
 /**
  * @private
@@ -6,7 +6,7 @@ import { Omit } from '../types'
 type GetDefaultProps<
   P extends object,
   DP extends Partial<P> = Partial<P>
-> = DP & Omit<P, DP>
+> = DP & Diff<P, DP>
 
 /**
  * identity function helper to properly resolve default and required props type annotation within Component
