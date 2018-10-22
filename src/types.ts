@@ -49,6 +49,21 @@ export type Maybe<T> = T | null | undefined
 export type UnionFromTuple<T> = T extends (infer U)[] ? U : never
 
 /**
+ * extracts arguments tuple type from a function.
+ * This is useful with React's children as a function(render prop) pattern, when implementing HoC
+ *
+ * @example
+ * ```ts
+ * const funcTestOneArgs = (one: number) => { return }
+ * // $ExpectType [number]
+ * type Test = FunctionArgsTuple<typeof funcTestNoArgs>
+ * ```
+ */
+export type FunctionArgsTuple<T> = T extends (...args: infer U) => any
+  ? U
+  : never
+
+/**
  * represents the union type of all the value types of the enumerable properties in an object Type T
  */
 export type Values<T extends object> = T extends { [k: string]: infer V }

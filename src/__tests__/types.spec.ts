@@ -2,6 +2,7 @@ import {
   AnyFunction,
   Brand,
   Diff,
+  FunctionArgsTuple,
   Keys,
   KnownKeys,
   NonPrimitive,
@@ -70,6 +71,35 @@ describe(`generic TS type utils`, () => {
       actual = false
 
       expect(actual).toBe(false)
+    })
+  })
+
+  describe(`FunctionArgs`, () => {
+    it(`should infer tuple type from function arguments`, () => {
+      const funcTestNoArgs = () => {
+        return
+      }
+      const funcTestOneArgs = (one: number) => {
+        return
+      }
+      const funcTestMultipleArgs = (
+        one: number,
+        two: string,
+        three: boolean
+      ) => {
+        return
+      }
+
+      // $ExpectType []
+      type TestNone = FunctionArgsTuple<typeof funcTestNoArgs>
+      // $ExpectType [number]
+      type TestOne = FunctionArgsTuple<typeof funcTestOneArgs>
+      // $ExpectType [number, string, boolean]
+      type TestMultiple = FunctionArgsTuple<typeof funcTestMultipleArgs>
+
+      expect([] as TestNone).toEqual([])
+      expect([1] as TestOne).toEqual([1])
+      expect([1, 'hello', true] as TestMultiple).toEqual([1, 'hello', true])
     })
   })
 
