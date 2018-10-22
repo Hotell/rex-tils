@@ -407,6 +407,24 @@ type Result = Omit<
     two: number
     three: boolean
   },
+  'two'
+>
+
+const obj: Result = {
+  one: '123',
+  three: false,
+}
+```
+
+**`Diff<T extends object,K extends object>`**
+
+```tsx
+type Result = Diff<
+  {
+    one: string
+    two: number
+    three: boolean
+  },
   {
     two: number
   }

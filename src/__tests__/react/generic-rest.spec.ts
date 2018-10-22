@@ -21,7 +21,7 @@ describe(`generic typesafe rest`, () => {
       WrappedComponent: ComponentType<OriginalProps>
     ) => {
       type Props = OriginalProps & InjectedProps
-      type HoCProps = Omit<Props, InjectedProps> & Partial<InjectedProps>
+      type HoCProps = Omit<Props, keyof InjectedProps> & Partial<InjectedProps>
 
       return (class WithLog extends Component<Props> {
         render() {

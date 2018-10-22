@@ -13,7 +13,15 @@ export type StringMap<T> = { [key: string]: T }
  */
 export type Constructor<T = {}> = new (...args: any[]) => T
 
-export type Omit<T, K> = Pick<T, Exclude<keyof T, keyof K>>
+/**
+ * Supplement/Negative to Pick from standard tslib.d.ts
+ */
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+/**
+ * As the name hints, $Diff<A, B> is the type representing the set difference of A and B, i.e. A \ B, where A and B are both object types.
+ */
+export type Diff<T, K> = Pick<T, Exclude<keyof T, keyof K>>
 
 /**
  * opposite of standard library `NonNullable`
