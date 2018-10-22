@@ -49,6 +49,13 @@ export type Maybe<T> = T | null | undefined
 export type UnionFromTuple<T> = T extends (infer U)[] ? U : never
 
 /**
+ * represents the union type of all the value types of the enumerable properties in an object Type T
+ */
+export type Values<T extends object> = T extends { [k: string]: infer V }
+  ? V
+  : never
+
+/**
  * `keyof` doesn't work/distribute on union types. This mapped type fixes this issue
  *
  * @example
