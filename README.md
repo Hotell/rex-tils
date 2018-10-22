@@ -476,6 +476,20 @@ gross(eur, usd) // Type '"EUR"' is not assignable to type '"USD"'.
 
 - extracts union type from tuple
 
+**`FunctionArgsTuple<T>`**
+
+- extracts arguments tuple type from a function
+
+> This is useful with React's children as a function(render prop) pattern, when implementing HoC
+
+```ts
+const funcTestOneArgs = (one: number) => {
+  return
+}
+// $ExpectType [number]
+type Test = FunctionArgsTuple<typeof funcTestNoArgs>
+```
+
 **`Values<T>`**
 
 - `Values<T>` represents the union type of all the value types of the enumerable properties in an object Type T.
