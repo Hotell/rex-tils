@@ -9,9 +9,12 @@ type GetDefaultProps<
 > = DP & Diff<P, DP>
 
 /**
- * identity function helper to properly resolve default and required props type annotation within Component
- * @param _defaultProps defaultProps object
+ * Identity function helper to properly resolve default and required props type annotation within Component
+ *
+ * @param defaultProps
+ *
  * @example
+ *
  * ```tsx
  * type Props = {
  *  onClick: (e: MouseEvent<HTMLElement>) => void
@@ -52,9 +55,12 @@ export const createPropsGetter = <DP extends Readonly<object>>(
 ) => <P extends Partial<DP>>(props: P): GetDefaultProps<P, DP> => props as any
 
 /**
- * helper to create Readonly default props
- * @param props default props object that's gonna be frozen
+ * Helper to create Readonly default props
+ *
+ * @param props - default props object that's gonna be frozen
+ *
  * @example
+ *
  * ```tsx
  * // $ExpectType Readonly<{color:'blue' | 'green' | 'red', type: 'button' | 'submit'}>
  * const defaultProps = DefaultProps({
@@ -66,9 +72,12 @@ export const createPropsGetter = <DP extends Readonly<object>>(
 export const DefaultProps = <T extends object>(props: T) => Object.freeze(props)
 
 /**
- * type alias to define defaultProps within Props intersection
+ * Type alias to define defaultProps within Props intersection
+ *
  * @param props default props object type annotation
+ *
  * @example
+ *
  * ```ts
  * // $ExpectType {onClick: (e: MouseEvent<HTMLElement>) => void, children: ReactNode, color?:'blue' | 'green' | 'red', type?: 'button' | 'submit'}
  * type Props = {

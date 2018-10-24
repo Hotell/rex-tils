@@ -17,9 +17,8 @@ export const isArray = <T>(value: any): value is Array<T> =>
 
 /**
  *
- * to get proper type object within if branch, you need to explicitly provide generic value otherwise it will be narrowed to `object` only
- *
  * @example
+ *
  * ```ts
  * type MyMap = { who: string; age: number }
  * declare const someObj: MyMap | string | number
@@ -48,8 +47,8 @@ export const isPromise = (value: any): value is PromiseLike<any> =>
 
 /**
  *
- * Checks if string OR array OR object are empty
- * If you provide another value to check it will throw an error
+ * Checks if string OR array OR object is empty.
+ * If you provide another value to check it will throw an error.
  */
 export const isEmpty = <T extends string | object>(
   value: T | Empty

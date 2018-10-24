@@ -4,7 +4,11 @@ import { Diff } from '../types'
 /**
  * Use this to get properly typed {...rest} when used with generics. ( React HoC )
  *
+ * @param props
+ * @param pickProps
+ *
  * @example
+ *
  * ```tsx
  * type InjectedProps = { enableLog: boolean }
  * type Config = {...}
@@ -22,8 +26,6 @@ import { Diff } from '../types'
  * }
  * ```
  *
- * @param props
- * @param pickProps
  */
 export const pickWithRest = <
   Props extends object = object,

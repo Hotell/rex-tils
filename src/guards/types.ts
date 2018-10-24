@@ -6,13 +6,15 @@ type Blank = null | undefined | void
 export type NonArray<T> = T extends any[] ? never : T
 
 /**
- * // object collects {} and Array<any> so adding both {} and Array<any> is not needed
+ * Object collects {} and Array<any> so adding both {} and Array<any> is not needed
+ *
  * @private
  */
 export type AllowedEmptyCheckTypes = Blank | string | object
 
 /**
  * GetEmpty mapped type that will cast any AllowedEmptyCheckTypes to empty equivalent
+ *
  * @private
  */
 export type GetEmpty<T extends AllowedEmptyCheckTypes> = T extends Blank
