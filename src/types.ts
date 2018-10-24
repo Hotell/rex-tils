@@ -28,7 +28,14 @@ export type Diff<T, K> = Pick<T, Exclude<keyof T, keyof K>>
  */
 export type Nullable<T> = T extends null | undefined ? T : never
 
+/**
+ * Get only JS primitive types from a type
+ */
 export type Primitive<T> = T extends object ? never : T
+
+/**
+ * Get non JS primitive types from a type. Opposite of `Primitive`
+ */
 export type NonPrimitive<T> = T extends object ? T : never
 
 /**
@@ -40,6 +47,7 @@ export type Maybe<T> = T | null | undefined
  * extracts union type from tuple
  *
  * @example
+ *
  * ```ts
  * type Tuple = [number, string, boolean]
  * // $ExpectType number | string | boolean
@@ -49,10 +57,11 @@ export type Maybe<T> = T | null | undefined
 export type UnionFromTuple<T> = T extends (infer U)[] ? U : never
 
 /**
- * extracts arguments tuple type from a function.
+ * Extracts arguments tuple type from a function.
  * This is useful with React's children as a function(render prop) pattern, when implementing HoC
  *
  * @example
+ *
  * ```ts
  * const funcTestOneArgs = (one: number) => { return }
  * // $ExpectType [number]
@@ -64,16 +73,19 @@ export type FunctionArgsTuple<T> = T extends (...args: infer U) => any
   : never
 
 /**
- * represents the union type of all the value types of the enumerable properties in an object Type T
+ * Represents the union type of all the value types of the enumerable properties in an object Type T
  */
 export type Values<T extends object> = T extends { [k: string]: infer V }
   ? V
   : never
 
 /**
+ * Get Proper key types union even from distributed union types.
+ *
  * `keyof` doesn't work/distribute on union types. This mapped type fixes this issue
  *
  * @example
+ *
  * ```ts
  * type SomeUnion = { one: number } | { three: string } | { four: boolean }
  * // $ExpectType 'one' | 'three' | 'four'
@@ -83,9 +95,10 @@ export type Values<T extends object> = T extends { [k: string]: infer V }
 export type Keys<T> = T extends any ? keyof T : never
 
 /**
- * gets proper known keys from object which contains index type `[key:string]: any`
+ * Get proper known keys from object which contains index type `[key:string]: any`
  *
  * @example
+ *
  * ```ts
  * type MapWithIndexType = { one: number; two: string; [k: string]: any; }
  * // $ExpectType 'one' | 'two'
@@ -99,9 +112,10 @@ export type KnownKeys<T> = {
   : never
 
 /**
- * gets required only known keys from object which contains index type `[key:string]: any`
+ * Get required only known keys from object which contains index type `[key:string]: any`
  *
  * @example
+ *
  * ```ts
  * type MapWithIndexType = { one: number; two?: string; [k: string]: any; }
  * // $ExpectType 'one'
@@ -115,9 +129,10 @@ export type RequiredKnownKeys<T> = {
   : never
 
 /**
- * gets optional only known keys from object which contains index type `[key:string]: any`
+ * Get optional only known keys from object which contains index type `[key:string]: any`
  *
  * @example
+ *
  * ```ts
  * type MapWithIndexType = { one: number; two?: string; [k: string]: any; }
  * // $ExpectType 'two'
@@ -133,11 +148,13 @@ export type OptionalKnownKeys<T> = {
   : never
 
 /**
- * use this mapped typed for creating types for proper nominal type checking
+ * Create nominally typed primitives
  *
- * kudos to https://michalzalecki.com/nominal-typing-in-typescript/#approach-4-intersection-types-and-brands
+ * Use this mapped typed for creating types for proper nominal type checking.
+ * 👉 kudos to https://michalzalecki.com/nominal-typing-in-typescript/#approach-4-intersection-types-and-brands
  *
  * @example
+ *
  * ```ts
  * type USD = Brand<number, "USD">
  * type EUR = Brand<number, "EUR">
@@ -160,6 +177,7 @@ export type Brand<K, T> = K & { __brand: T }
  * It doesn't work for undefined | null values. for that use `PickWithType`
  *
  * @example
+ *
  * ```ts
  * type Person = { id: number; name: string; lastName: string; address: { street: string; nr: number; } load: () => Promise<Person> }
  *
@@ -176,6 +194,7 @@ export type PickWithTypeUnion<Base, Condition> = Pick<
  * Pick key-values from Base provided by Condition generic type. Generic needs to be one type from `null | undefined | object | string | number | boolean`
  *
  * @example
+ *
  * ```ts
  * type Person = { id: number; name: string; lastName: string; address: { street: string; nr: number; } load: () => Promise<Person> }
  *

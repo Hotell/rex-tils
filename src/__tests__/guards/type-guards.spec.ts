@@ -74,7 +74,7 @@ describe(`type guards`, () => {
 
     it(`should properly type constraint object via inference`, () => {
       if (isObject(possibleValidObj)) {
-        // $ExpectType {one:number}
+        // $ExpectType MyMap
         expect(possibleValidObj).toHaveProperty('age')
         const { age } = possibleValidObj
         expect(age).toBe(32)

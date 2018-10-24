@@ -17,6 +17,7 @@ type NestedArray<T extends ReactChild> = T | T[]
  * It is designed to be used with the React.Children API.
  *
  * @example
+ *
  * ```
  */
 export type ChildrenArray<T extends ReactChild> =
@@ -25,7 +26,9 @@ export type ChildrenArray<T extends ReactChild> =
 
 /**
  * Gets Component/PureComponent state type
+ *
  * @example
+ *
  * ```tsx
  * class MyComponent extends React.Component<{},{foo: number}> {
  *  state = {foo: 42};
@@ -52,6 +55,7 @@ export type ElementState<T> = T extends ComponentClass<any, infer S> ? S : never
  * Because ElementProps does not preserve the optionality of defaultProps, ElementConfig (which does) is more often the right choice, especially for simple props pass-through as with higher-order components.
  *
  * @example
+ *
  * ```tsx
  * import React from 'react'
  * class MyComponent extends React.Component<{foo: number}> {
@@ -75,6 +79,7 @@ export type ElementProps<T> = T extends
  * Like React.Element<typeof Component>, Type must be the type of a React component so you need to use typeof as in React.ElementProps<typeof MyComponent>.
  *
  * @example
+ *
  * ```tsx
  * import React from 'react'
  * class MyComponent extends React.Component<{foo: number}> {

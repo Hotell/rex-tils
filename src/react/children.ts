@@ -9,6 +9,7 @@ export const isEmptyChildren = (children: ReactNode) =>
  * Similarly to Children.only it will throw an error if it's not a function
  *
  * @example
+ *
  * ```ts
  * type Props = {
  *  userId: string
@@ -37,10 +38,7 @@ export const isEmptyChildren = (children: ReactNode) =>
  * </UserRenderer>
  * ```
  */
-export const ChildrenAsFunction = <T extends AnyFunction>(
-  children: T
-  // tslint:disable-next-line:ban-types
-) => {
+export const ChildrenAsFunction = <T extends AnyFunction>(children: T) => {
   if (typeof children !== 'function') {
     throw new Error(
       'React: ChildrenAsFunctionOnly expected to receive a single function as a child.'

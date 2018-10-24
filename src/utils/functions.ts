@@ -6,8 +6,11 @@ export const identity = <T>(arg: T) => arg
 
 /**
  * Enum function to create type safe immutable object map with runtime presence
- * @param args
+ *
+ * @param args - Enum keys
+ *
  * @example
+ *
  * ```ts
  * // $ExpectType Readonly<{ No: "No"; Yes: "Yes"; }>
  * const AnswerResponse = Enum('No', 'Yes')
@@ -29,6 +32,7 @@ export const Enum = <T extends string[]>(...args: T) => {
  * Use for getting literal type out of const myEnum = Enum(...) if you need it and export via token merge
  *
  * @example
+ *
  * ```ts
  * // $ExpectType Readonly<{ No: "No"; Yes: "Yes"; }>
  * export const AnswerResponse = Enum('No', 'Yes')
