@@ -1,6 +1,6 @@
-import { createElement } from 'react'
+import { createElement, ReactElement } from 'react'
 
-export type Props = {
+type Props = {
   children: { [key: string]: any } | string | number | boolean
 }
 
@@ -14,7 +14,7 @@ export type Props = {
  * ```
  *
  */
-export const Pre = (props: Props): JSX.Element => {
+export const Pre = (props: Props): ReactElement<any> => {
   // tslint:disable-next-line:no-magic-numbers
   return createElement('pre', {}, JSON.stringify(props.children, null, 2))
 }
