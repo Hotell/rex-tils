@@ -9,7 +9,6 @@
     ],
     "strict": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "suppressImplicitAnyIndexErrors": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
