@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+
+# [2.0.0](https://github.com/Hotell/rex-tils/compare/v1.0.0...v2.0.0) (2018-10-29)
+
+### Bug Fixes
+
+- **react:** don't export component Props ([6709b50](https://github.com/Hotell/rex-tils/commit/6709b50))
+
+### Chores
+
+- bump deps and TS to 3.1 ([9d6ef47](https://github.com/Hotell/rex-tils/commit/9d6ef47))
+
+### Features
+
+- **react:** implement ElementProps,ElementState,ElementConfig ([6b7a6ca](https://github.com/Hotell/rex-tils/commit/6b7a6ca))
+- **types:** add FunctionArgsTuple for function args type extraction ([37e4e42](https://github.com/Hotell/rex-tils/commit/37e4e42))
+- **types:** implement Values mapped type like Flow has ([8d36793](https://github.com/Hotell/rex-tils/commit/8d36793))
+- **types:** reimplement Omit and add Diff ([121c491](https://github.com/Hotell/rex-tils/commit/121c491))
+- **utils:** add Empty for type token creation ([d20978a](https://github.com/Hotell/rex-tils/commit/d20978a))
+- **utils:** add Enum helper for creating type safe enums ([c89f36f](https://github.com/Hotell/rex-tils/commit/c89f36f))
+
+### Reverts
+
+- **tsc:** remove exclude as it break linting pipeline ([dd45aee](https://github.com/Hotell/rex-tils/commit/dd45aee))
+
+### BREAKING CHANGES
+
+- **react:** GetComponentProps and friends was removed, use the new mapped types instead
+- **types:** Omit now mirrors Pick like behaviour. Previously Omit accepted 2 object types. Now
+  the 2nd type is a keyof from primary object definition. To get previous behaviour we are introducing
+  Diff mapped type, so use that from now on.
+- minimal supported version of TS is now 3.1
+
 <a name="1.0.0"></a>
 
 # [1.0.0](https://www.github.com/Hotell/rex-tils/compare/v0.13.2...v1.0.0) (2018-09-24)
