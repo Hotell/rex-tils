@@ -2,9 +2,9 @@ import { Component, createElement, Fragment } from 'react'
 
 type Props = {
   count: number
-  onIncrement(): void
-  onDecrement(): void
-  onIncrementIfOdd(): void
+  onIncrement: () => void
+  onDecrement: () => void
+  onIncrementIfOdd: () => void
 }
 
 export class Counter extends Component<Props> {

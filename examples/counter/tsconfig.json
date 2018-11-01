@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
+    "module": "esnext",
     "target": "es5",
     "lib": [
       "dom","es2015"
     ],
-    "module": "esnext",
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "jsx": "react",
     "jsxFactory": "createElement",

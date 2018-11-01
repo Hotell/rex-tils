@@ -5,23 +5,23 @@
   "author": "Martin Hochel <hochelmartin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "parcel --no-cache src/index.html",
+    "start": "parcel src/index.html",
     "build": "rm -rf dist && parcel build src/index.html"
   },
   "dependencies": {
-    "@martin_hotell/rex-tils": "0.2.0",
-    "papercss": "1.5.1",
-    "react": "16.4.2",
-    "react-dom": "16.4.2",
-    "redux": "4.0.0",
+    "@martin_hotell/rex-tils": "2.0.0",
+    "papercss": "1.6.0",
+    "react": "16.6.0",
+    "react-dom": "16.6.0",
+    "redux": "4.0.1",
     "redux-observable": "1.0.0",
-    "rxjs": "6.2.2",
+    "rxjs": "6.3.3",
     "tslib": "1.9.3"
   },
   "devDependencies": {
-    "@types/react": "16.4.9",
-    "@types/react-dom": "16.0.7",
-    "parcel-bundler": "1.9.7",
-    "typescript": "2.9.2"
+    "@types/react": "16.4.18",
+    "@types/react-dom": "16.0.9",
+    "parcel-bundler": "1.10.3",
+    "typescript": "3.1.5"
   }
 }
