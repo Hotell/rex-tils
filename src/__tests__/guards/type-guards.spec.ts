@@ -182,6 +182,22 @@ describe(`type guards`, () => {
       expect(isString('hello')).toBe(true)
       expect(isString('')).toBe(true)
     })
+
+    it(`should keep string literals if value is particular string literal`, () => {
+      // tslint:disable-next-line:prefer-const
+      const maybeString = 'hello' as 'hello' | boolean | number
+
+      function testTypes() {
+        if (isString(maybeString)) {
+          // $ExpectType 'hello'
+          expect(maybeString).toBe('hello')
+        } else {
+          throw new Error('string literals not handled properly')
+        }
+      }
+
+      expect(testTypes).not.toThrow()
+    })
   })
 
   describe(`isPresent`, () => {
