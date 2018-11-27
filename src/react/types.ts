@@ -103,5 +103,5 @@ export type ElementConfig<T> = T extends
   | FunctionComponent<infer P>
   ? Partial<D> & Diff<P, D>
   : T extends ComponentType<infer Props> | FunctionComponent<infer Props>
-    ? Props
-    : never
+  ? Props
+  : never

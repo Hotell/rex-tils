@@ -1,6 +1,6 @@
 // tslint:disable:no-magic-numbers
 
-import { Children, Component, SFC } from 'react'
+import { Children, Component, FC } from 'react'
 
 import {
   ChildrenArray,
@@ -39,7 +39,7 @@ describe(`React helper types`, () => {
       }
     }
     const MyComponentFn = (props: Props) => props.foo
-    const MyComponentFnViaGeneric: SFC<Props> = (_props) => null
+    const MyComponentFnViaGeneric: FC<Props> = (_props) => null
 
     class MyComponentWithDefault extends Component<Props> {
       static defaultProps = defaultProps
@@ -51,7 +51,7 @@ describe(`React helper types`, () => {
     const MyComponentFnWithDefault = (props: Props) => props.foo
     MyComponentFnWithDefault.defaultProps = defaultProps
 
-    const MyComponentFnWithDefaultViaGeneric: SFC<Props> = (_props) => null
+    const MyComponentFnWithDefaultViaGeneric: FC<Props> = (_props) => null
     MyComponentFnWithDefaultViaGeneric.defaultProps = defaultProps
 
     describe(`ElementProps`, () => {
@@ -77,7 +77,7 @@ describe(`React helper types`, () => {
         const value2: Test = {}
       })
 
-      it(`should extract props from Function component defined via SFC<T>`, () => {
+      it(`should extract props from Function component defined via FC<T>`, () => {
         type Test = ElementProps<typeof MyComponentFnViaGeneric>
         const value: Test = { foo: 42 }
 
@@ -110,7 +110,7 @@ describe(`React helper types`, () => {
         expect(value2).toEqual({})
       })
 
-      it(`should extract props from Function component defined via SFC<T> with defaultProps in mind`, () => {
+      it(`should extract props from Function component defined via FC<T> with defaultProps in mind`, () => {
         type Test = ElementConfig<typeof MyComponentFnWithDefaultViaGeneric>
         const value: Test = { foo: 42 }
 

@@ -142,7 +142,11 @@ export type RequiredKnownKeys<T> = {
 export type OptionalKnownKeys<T> = {
   [K in keyof T]: string extends K
     ? never
-    : number extends K ? never : {} extends Pick<T, K> ? K : never
+    : number extends K
+    ? never
+    : {} extends Pick<T, K>
+    ? K
+    : never
 } extends { [_ in keyof T]: infer U }
   ? U
   : never

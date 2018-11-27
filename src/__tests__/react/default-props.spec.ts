@@ -1,4 +1,4 @@
-import { Component, createElement, MouseEvent, ReactNode, SFC } from 'react'
+import { Component, createElement, FC, MouseEvent, ReactNode } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 
 import { createPropsGetter, DefaultProps } from '../../react'
@@ -52,7 +52,7 @@ describe(`default props helper`, () => {
       }
     }
 
-    const ButtonSFC: SFC<Props> = (props) => {
+    const ButtonFC: FC<Props> = (props) => {
       const {
         // $ExpectType (e: MouseEvent<HTMLElement>) => void
         onClick: handleClick,
@@ -72,7 +72,7 @@ describe(`default props helper`, () => {
         children
       )
     }
-    ButtonSFC.defaultProps = defaultProps
+    ButtonFC.defaultProps = defaultProps
 
     const mountTo = document.createElement('div')
 
@@ -88,7 +88,7 @@ describe(`default props helper`, () => {
             onClick: this.handleClick,
             children: 'Click me!',
           }),
-          createElement(ButtonSFC, {
+          createElement(ButtonFC, {
             onClick: this.handleClick,
             children: 'Click me!',
           })

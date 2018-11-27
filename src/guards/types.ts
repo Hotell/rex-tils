@@ -20,8 +20,12 @@ export type AllowedEmptyCheckTypes = Blank | string | object
 export type GetEmpty<T extends AllowedEmptyCheckTypes> = T extends Blank
   ? T
   : T extends string
-    ? ''
-    : T extends any[] ? Empty.Array : T extends object ? {} : never
+  ? ''
+  : T extends any[]
+  ? Empty.Array
+  : T extends object
+  ? {}
+  : never
 
 export interface NonEmptyArray<T> extends Array<T> {
   0: T
@@ -37,4 +41,8 @@ export declare namespace Empty {
 
 export type Bottom<T> = T extends string
   ? Empty.String
-  : T extends any[] ? Empty.Array : T extends object ? Empty.Object : never
+  : T extends any[]
+  ? Empty.Array
+  : T extends object
+  ? Empty.Object
+  : never
