@@ -1,5 +1,5 @@
 // tslint:disable:no-magic-numbers
-import { Enum, identity, noop } from '../../utils'
+import { Enum, identity, noop, tuple } from '../../utils'
 
 describe(`function utils`, () => {
   it(`should be just a no operation function`, () => {
@@ -59,5 +59,28 @@ describe(`function utils`, () => {
     } catch (e) {
       expect(e).toBeTruthy()
     }
+  })
+
+  it(`should create implicit tuple array with proper tuple types`, () => {
+    // $ExpectType (string | number | boolean)[]
+    const testWidened = ['one', 1, false]
+
+    // $ExpectType [string, number, boolean]
+    const testProperTuple = tuple('one', 1, false)
+
+    type ProperTuple = typeof testProperTuple
+    const properTuple: ProperTuple = ['hello', 0, true]
+
+    expect(properTuple).toEqual(['hello', 0, true])
+
+    // $ExpectError
+    // @ts-ignore
+    const properTupleWithError: ProperTuple = [{}, 'hello', true]
+    expect(properTuple).not.toEqual(properTupleWithError)
+
+    type TupleViaUnion = typeof testWidened
+    const noErrorOnWidened: TupleViaUnion = [true, false, 'what?', -1]
+
+    expect([0, 0, 0] as TupleViaUnion).not.toEqual(noErrorOnWidened)
   })
 })

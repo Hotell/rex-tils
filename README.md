@@ -225,6 +225,18 @@ As described in [10 TypeScript Pro tips article](https://medium.com/@martin_hote
    )
 ```
 
+**`tuple(...args: T): T`**
+
+- Implicitly create a tuple with proper tuple types instead of widened array of union types
+
+```ts
+// $ExpectType (string | number | boolean)[]
+const testWidened = ['one', 1, false]
+
+// $ExpectType [string, number, boolean]
+const testProperTuple = tuple('one', 1, false)
+```
+
 #### React/Preact related helpers:
 
 **`isEmptyChildren( children: ReactNode )`**
