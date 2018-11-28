@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.0"></a>
+
+# [2.1.0](https://github.com/Hotell/rex-tils/compare/v2.0.0...v2.1.0) (2018-11-28)
+
+### Features
+
+- **types:** add InstanceTypes ([6ab93b1](https://github.com/Hotell/rex-tils/commit/6ab93b1))
+- **utils:** add tuple function to create proper tuple types ([b7b7723](https://github.com/Hotell/rex-tils/commit/b7b7723))
+
 <a name="2.0.0"></a>
 
 # [2.0.0](https://github.com/Hotell/rex-tils/compare/v1.0.0...v2.0.0) (2018-10-29)
