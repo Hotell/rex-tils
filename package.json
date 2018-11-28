@@ -83,7 +83,7 @@
     "@types/node": "10.12.10",
     "@types/prettier": "1.15.1",
     "@types/react": "16.7.7",
-    "@types/react-dom": "16.0.10",
+    "@types/react-dom": "16.0.11",
     "@types/webpack-config-utils": "2.3.0",
     "commitizen": "3.0.5",
     "cross-var": "1.1.0",
@@ -117,7 +117,6 @@
     "tslint-react": "3.6.0",
     "typedoc": "0.13.0",
     "typescript": "3.1.6",
-    "validate-commit-msg": "2.14.0",
     "webpack-config-utils": "2.3.1"
   }
 }
