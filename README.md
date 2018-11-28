@@ -464,6 +464,29 @@ const obj: Result = {
 
 - Maybe types accept the provided type as well as null or undefined
 
+**`InstanceTypes<T>`**
+
+- obtain the return type of a constructor function type within array or object.
+  > Like native lib.d.ts `InstanceType` but for arrays/tuples or objects
+
+```ts
+class Foo {
+  hello = 'world'
+}
+class Moo {
+  world = 'hello'
+}
+
+const arr: [typeof Foo, typeof Moo] = [Foo, Moo]
+const obj: { foo: typeof Foo; moo: typeof Moo } = { foo: Foo, moo: Moo }
+
+// $ExpectType [Foo, Moo]
+type TestArr = InstanceTypes<typeof arr>
+
+// $ExpectType {foo: Foo, moo: Moo}
+type TestObj = InstanceTypes<typeof obj>
+```
+
 **`Brand<T,K>`**
 
 - use this mapped typed for creating types for proper nominal type checking

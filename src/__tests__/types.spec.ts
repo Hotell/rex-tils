@@ -3,6 +3,7 @@ import {
   Brand,
   Diff,
   FunctionArgsTuple,
+  InstanceTypes,
   Keys,
   KnownKeys,
   NonPrimitive,
@@ -326,6 +327,30 @@ describe(`generic TS type utils`, () => {
       const expected: Expected = 2222
 
       expect(actual).toBe(expected)
+    })
+
+    it(`should return instance type of constructor from arrays or objects`, () => {
+      class Foo {
+        hello = 'world'
+      }
+      class Moo {
+        world = 'hello'
+      }
+      const arr: [typeof Foo, typeof Moo] = [Foo, Moo]
+      const obj: { foo: typeof Foo; moo: typeof Moo } = { foo: Foo, moo: Moo }
+
+      // $ExpectType [Foo, Moo]
+      type TestArr = InstanceTypes<typeof arr>
+      const testArr: TestArr = [new Foo(), new Moo()]
+
+      expect(testArr).toEqual(testArr)
+
+      // $ExpectType {foo: Foo, moo: Moo}
+      type TestObj = InstanceTypes<typeof obj>
+      const testObj: TestObj = { foo: new Foo(), moo: new Moo() }
+
+      expect(testObj.foo).toBeInstanceOf(Foo)
+      expect(testObj.moo).toBeInstanceOf(Moo)
     })
   })
 })

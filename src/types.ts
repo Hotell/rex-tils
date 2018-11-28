@@ -44,6 +44,30 @@ export type NonPrimitive<T> = T extends object ? T : never
 export type Maybe<T> = T | null | undefined
 
 /**
+ * Obtain the return type of a constructor function type within array or object.
+ * > Like native lib.d.ts `InstanceType` but for arrays/tuples or objects
+ *
+ * @example
+ *
+ * ```ts
+ * class Foo { hello = 'world' }
+ * class Moo { world = 'hello' }
+ *
+ * const arr: [typeof Foo, typeof Moo] = [Foo, Moo]
+ * const obj: { foo: typeof Foo, moo: typeof Moo } = { foo: Foo, moo: Moo }
+ *
+ * // $ExpectType [Foo, Moo]
+ * type TestArr = InstanceTypes<typeof arr>
+ *
+ * // $ExpectType {foo: Foo, moo: Moo}
+ * type TestObj = InstanceTypes<typeof obj>
+ * ```
+ */
+export type InstanceTypes<T> = {
+  [P in keyof T]: T[P] extends Constructor<infer U> ? U : never
+}
+
+/**
  * extracts union type from tuple
  *
  * @example
@@ -58,7 +82,7 @@ export type UnionFromTuple<T> = T extends (infer U)[] ? U : never
 
 /**
  * Extracts arguments tuple type from a function.
- * This is useful with React's children as a function(render prop) pattern, when implementing HoC
+ * This is useful with React children as a function(render prop) pattern, when implementing HoC
  *
  * @example
  *
