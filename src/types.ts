@@ -91,6 +91,9 @@ export type UnionFromTuple<T> = T extends (infer U)[] ? U : never
  * // $ExpectType [number]
  * type Test = FunctionArgsTuple<typeof funcTestNoArgs>
  * ```
+ *
+ * @deprecated
+ * Instead use standard library `Parameters` mapped type
  */
 export type FunctionArgsTuple<T> = T extends (...args: infer U) => any
   ? U

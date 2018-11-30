@@ -513,7 +513,7 @@ gross(eur, usd) // Type '"EUR"' is not assignable to type '"USD"'.
 
 **`FunctionArgsTuple<T>`**
 
-- extracts arguments tuple type from a function
+> @DEPRECATED 👉 Instead use standard library `Parameters` mapped type
 
 > This is useful with React's children as a function(render prop) pattern, when implementing HoC
 

@@ -1,3 +1,5 @@
+// tslint:disable:deprecation
+
 import {
   AnyFunction,
   Brand,
