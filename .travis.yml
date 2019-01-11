@@ -1,8 +1,12 @@
 language: node_js
-node_js: '8'
+node_js:
+  - '8'
+  - '10'
 cache: yarn
 notifications:
   email: false
+before_install:
+  - npm i -g yarn
 install:
   - yarn
 script:

@@ -1,5 +1,11 @@
-const { writeFileSync, copyFileSync } = require('fs')
-const { resolve } = require('path')
+/**
+ * This file only purpose is to copy files before npm publish and strip churn/security sensitive metadata from package.json
+ *
+ * **NOTE:**
+ * 👉 This file should not use any 3rd party dependency
+ */
+const { writeFileSync, copyFileSync, statSync } = require('fs')
+const { resolve, basename } = require('path')
 const packageJson = require('../package.json')
 
 main()
@@ -9,23 +15,38 @@ function main() {
   const distPath = resolve(projectRoot, 'dist')
   const distPackageJson = createDistPackageJson(packageJson)
 
-  copyFileSync(
-    resolve(projectRoot, 'README.md'),
-    resolve(distPath, 'README.md')
+  const cpFiles = ['README.md', 'CHANGELOG.md', 'LICENSE.md', '.npmignore'].map(
+    (file) => resolve(projectRoot, file)
   )
-  copyFileSync(
-    resolve(projectRoot, 'CHANGELOG.md'),
-    resolve(distPath, 'CHANGELOG.md')
-  )
-  copyFileSync(
-    resolve(projectRoot, 'LICENSE.md'),
-    resolve(distPath, 'LICENSE.md')
-  )
-  copyFileSync(
-    resolve(projectRoot, '.npmignore'),
-    resolve(distPath, '.npmignore')
-  )
+
+  cp(cpFiles, distPath)
+
   writeFileSync(resolve(distPath, 'package.json'), distPackageJson)
+}
+
+/**
+ *
+ * @param {string[]|string} source
+ * @param {string} target
+ */
+function cp(source, target) {
+  const isDir = statSync(target).isDirectory()
+
+  if (isDir) {
+    if (!Array.isArray(source)) {
+      throw new Error(
+        'if <target> is directory you need to provide source as an array'
+      )
+    }
+
+    source.forEach((file) =>
+      copyFileSync(file, resolve(target, basename(file)))
+    )
+
+    return
+  }
+
+  copyFileSync(/** @type {string} */ (source), target)
 }
 
 /**

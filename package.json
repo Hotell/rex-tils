@@ -14,13 +14,15 @@
   "author": "Martin Hochel",
   "license": "MIT",
   "engines": {
-    "node": ">=8.5"
+    "node": ">=8.5",
+    "npm": ">=6.0",
+    "yarn": "^1.0"
   },
   "scripts": {
     "cleanup": "shx rm -rf dist",
     "prebuild": "npm run cleanup && npm run verify",
     "build": "tsc && tsc --target es2018 --outDir dist/esm2015 && rollup -c config/rollup.config.js && rollup -c config/rollup.config.js --environment NODE_ENV:production",
-    "postbuild": "node scripts/copy.js && npm run size",
+    "postbuild": "node scripts/copy && npm run size",
     "docs": "typedoc -p . --theme minimal --target 'es6' --excludeNotExported --excludePrivate --ignoreCompilerErrors --exclude \"**/src/**/__tests__/*.*\" --out docs src/",
     "test": "jest -c ./config/jest.config.js",
     "test:watch": "npm t -- --watch",
@@ -31,23 +33,21 @@
     "commit": "git-cz",
     "style": "npm run format -- --list-different && npm run lint",
     "style:fix": "npm run format:fix && npm run lint:fix",
-    "format": "prettier --config config/prettier.config.js \"**/*.{ts,tsx,js,jsx,css,scss,sass,less,md}\"",
+    "format": "prettier \"**/*.{ts,tsx,js,jsx,css,scss,sass,less,md}\"",
     "format:fix": "npm run format -- --write",
     "lint": "tslint --project tsconfig.json --format codeFrame",
     "lint:fix": "npm run lint -- --fix",
     "prerelease": "npm run build",
     "release": "standard-version",
-    "postrelease": "node scripts/copy.js && npm run release:github && npm run release:npm",
+    "postrelease": "node scripts/copy && node scripts/build && npm run release:github && npm run release:npm",
     "release:github": "git push --no-verify --follow-tags origin master",
-    "release:npm": "cd dist && npm publish",
-    "release:preflight": "cd dist && npm pack",
-    "size": "npm run size:umd && npm run size:fesm",
-    "size:umd": "shx echo \"Gzipped+minified UMD bundle Size:\" && cross-var strip-json-comments --no-whitespace \"./dist/bundles/index.umd.min.js\" | gzip-size",
-    "size:fesm": "shx echo \"Gzipped+minified FESM bundle Size:\" && strip-json-comments --no-whitespace \"./dist/bundles/index.esm.min.js\" | gzip-size"
+    "release:npm": "npm publish dist",
+    "release:preflight": "npm pack ./dist --dry-run",
+    "size": "node scripts/file-size ./dist/bundles/index.umd.min.js ./dist/bundles/index.esm.min.js"
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "cz-conventional-changelog"
     }
   },
   "husky": {
@@ -59,7 +59,7 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,css,scss,sass,less,md}": [
-      "prettier --config config/prettier.config.js --write",
+      "prettier --write",
       "git add"
     ],
     "src/**/*.{ts,tsx}": [
@@ -85,15 +85,18 @@
     "@types/react": "16.7.7",
     "@types/react-dom": "16.0.11",
     "@types/webpack-config-utils": "2.3.0",
+    "brotli-size": "0.0.3",
     "commitizen": "3.0.5",
     "cross-var": "1.1.0",
     "cz-conventional-changelog": "2.1.0",
-    "gzip-size-cli": "3.0.0",
+    "gzip-size": "5.0.0",
     "husky": "1.2.0",
     "jest": "23.6.0",
     "jest-watch-typeahead": "0.2.0",
+    "kleur": "3.0.1",
     "lint-staged": "8.1.0",
     "prettier": "1.15.2",
+    "pretty-bytes": "5.1.0",
     "react": "16.4.2",
     "react-dom": "16.5.2",
     "rollup": "0.67.3",
@@ -107,7 +110,6 @@
     "rxjs": "6.2.2",
     "shx": "0.3.2",
     "standard-version": "4.4.0",
-    "strip-json-comments-cli": "1.0.1",
     "ts-jest": "23.10.5",
     "tslib": "1.9.3",
     "tslint": "5.11.0",
@@ -117,6 +119,7 @@
     "tslint-react": "3.6.0",
     "typedoc": "0.13.0",
     "typescript": "3.1.6",
+    "typescript-tslint-plugin": "0.2.1",
     "webpack-config-utils": "2.3.1"
   }
 }
