@@ -5,6 +5,17 @@ import { ActionsOfType, ActionsUnion, createAction } from '../../redux'
 // tslint:disable:no-magic-numbers
 
 describe(`Redux type-safe action helpers`, () => {
+  describe(`Should create compile time only immutable objects`, () => {
+    const SET_AGE = '[core] set age'
+    const setAge = (age: number) => createAction(SET_AGE, age)
+    const setAgeAction = setAge(33)
+
+    // @ts-ignore
+    expect(() => (setAgeAction.type = 'Foo')).not.toThrow()
+    // @ts-ignore
+    expect(() => (setAgeAction.payload = 44)).not.toThrow()
+  })
+
   describe(`Should be able to extract action type from Union`, () => {
     enum ActionTypes {
       SET_AGE = '[core] set age',
