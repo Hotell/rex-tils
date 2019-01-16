@@ -1,8 +1,10 @@
 // ============================
-// ts-jest types require 'babel__core'
+// extend existing types
 // ============================
-declare module 'babel__core' {
-  interface TransformOptions {}
+declare namespace NodeJS {
+  interface ProcessEnv {
+    CI: 'true' | 'false'
+  }
 }
 
 // ============================
@@ -58,9 +60,15 @@ declare module 'rollup-plugin-terser' {
   export { terser }
 }
 
-// =====================
+// =====================∫
 // missing library types
 // =====================
+
+// ts-jest types require 'babel__core'
+declare module 'babel__core' {
+  interface TransformOptions {}
+}
+
 declare module '@commitlint/core' {
   interface Config {
     extends: string[]
@@ -72,4 +80,70 @@ declare module 'sort-object-keys' {
     sortWith?: (...args: any[]) => any
   ) => T
   export = sortPackageJson
+}
+
+declare module 'replace-in-file' {
+  interface Options {
+    files: string | string[]
+    from: Array<string | RegExp>
+    to: string | string[]
+    ignore: string | string[]
+    dry: boolean
+    encoding: string
+    disableGlobs: boolean
+    allowEmptyPaths: boolean
+  }
+
+  interface API {
+    (options: Partial<Options>): string[]
+    sync(options: Partial<Options>): string[]
+  }
+
+  const api: API
+  export = api
+}
+
+declare module 'gzip-size' {
+  type Options = import('zlib').ZlibOptions
+  type Input = string | Buffer
+
+  function gzipSize(input: Input, options?: Options): Promise<number>
+  namespace gzipSize {
+    function sync(input: Input, options?: Options): number
+    function stream(options?: Options): import('stream').PassThrough
+    function file(path: string, options?: Options): Promise<number>
+    function fileSync(path: string, options?: Options): number
+  }
+
+  export = gzipSize
+}
+
+declare module 'brotli-size' {
+  type Input = string | Buffer
+
+  namespace brotliSize {
+    function sync(input: Input): number
+    function stream(): import('stream').PassThrough
+  }
+
+  function brotliSize(input: Input): Promise<number>
+
+  export = brotliSize
+}
+
+declare module 'pretty-bytes' {
+  type Options = {
+    /**
+     * @default false
+     */
+    signed: boolean
+    /**
+     * @default false
+     */
+    locale: string | boolean
+  }
+
+  function prettyBytes(input: number, options?: Partial<Options>): string
+
+  export = prettyBytes
 }
