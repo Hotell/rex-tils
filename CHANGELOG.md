@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.1"></a>
+
+## [2.1.1](https://github.com/Hotell/rex-tils/compare/v2.1.0...v2.1.1) (2019-01-16)
+
+### Bug Fixes
+
+- **redux:** do not freeze actions in dev mode ([#29](https://github.com/Hotell/rex-tils/issues/29)) ([fd496df](https://github.com/Hotell/rex-tils/commit/fd496df)), closes [#21](https://github.com/Hotell/rex-tils/issues/21)
+- **types:** mark FunctionArgsTuple deprecated ([2b8aecd](https://github.com/Hotell/rex-tils/commit/2b8aecd))
+
 <a name="2.1.0"></a>
 
 # [2.1.0](https://github.com/Hotell/rex-tils/compare/v2.0.0...v2.1.0) (2018-11-28)
