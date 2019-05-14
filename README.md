@@ -4,6 +4,10 @@
 
 > **WHY/WHAT? 👉** https://medium.com/@martin_hotell/improved-redux-type-safety-with-typescript-2-8-2c11a8062575
 
+> **Enjoying/Using rex-tils ? 💪✅**
+>
+> <div align="center"><a href="https://paypal.me/martinhochel">Buy me a ☕️<br/><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="donate"></a></div>
+
 [![Greenkeeper badge](https://badges.greenkeeper.io/Hotell/rex-tils.svg)](https://greenkeeper.io/)
 
 [![Build Status](https://travis-ci.org/Hotell/rex-tils.svg?branch=master)](https://travis-ci.org/Hotell/rex-tils)
