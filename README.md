@@ -204,7 +204,7 @@ As described in [10 TypeScript Pro tips article](https://medium.com/@martin_hote
 // $ExpectType Readonly<{ No: "No"; Yes: "Yes"; }>
  export const AnswerResponse = Enum('No', 'Yes')
  // $ExpectType 'No' | 'Yes'
- export type AnswerResponse = Enum(typeof AnswerResponse)
+ export type AnswerResponse = Enum<typeof AnswerResponse>
 
  // consumer.ts
 
